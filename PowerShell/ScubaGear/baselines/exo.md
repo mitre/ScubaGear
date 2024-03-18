@@ -41,11 +41,11 @@ last modified: June 2023      -> last modified: June 2023
 ## Major & Minor increment changes for versions:
 ### Baseline:
 Only Major increments: EXO.md v1.0 -> EXO.md v2.0  
-- PRO Workflow for bumping the ScubaGear version number in progress .
+- PRO Workflow for bumping the ScubaGear version number in progress.
 - CON may cause a false sense in update for the user without reading the details in the changelog
 
 Mixed Major and Minor increases: EXO.md v1.0 -> EXO.md v1.1 -> EXO.md v2.0  
-- PRO Workflow for bumping the ScubaGear version number in progress . David noted that this can be adjusted for minor increases.
+- PRO Workflow for bumping the ScubaGear version number in progress. David noted that this can be adjusted for minor increases.
 - PRO allows the team to better define major and minor updates
 - CON If we are keeping baseline version in the policy ID, an enhancement would need to be made to support minor increases in policy IDs
 
@@ -55,8 +55,8 @@ Only Major increments: MS.EXO.1.1v1 -> MS.EXO.1.1v2
 
 Mixed Major and Minor increases: MS.EXO.1.1v1 -> MS.EXO.1.1v1.1 -> MS.EXO.1.1v2
 - PRO allows the team to better define major and minor updates to a policy
-- CON need to define major and minor udaptes to a policy
-- CON Major updates to a policy can be seen as a "new" policy which can warrent a new policy ID
+- CON need to define major and minor updates to a policy
+- CON Major updates to a policy can be seen as a "new" policy which can warrant a new policy ID
 
 ## Baseline version consistency
 ### Do we want to keep all baseline versions with each release?
@@ -66,7 +66,7 @@ YES (major increases only)
 - exo.md v2.0
 
   - PRO - uniformity across baselines
-  - PRO - Workflow for bumping the ScubaGear version number in progress .
+  - PRO - Workflow for bumping the ScubaGear version number in progress.
   - CON - can cause a false sense of update for the user
   - CON - If a baseline does it update this will trigger all baselines and policy ID (if baseline version is used) to be updated 
 
@@ -77,7 +77,7 @@ NO (major increases only)
 - exo.md v1.0
 
   - PRO - Better alignment with updates to policies and updates for the reader to follow
-  - PRO - Workflow for bumping the ScubaGear version number in progress .
+  - PRO - Workflow for bumping the ScubaGear version number in progress.
 
 
 YES (mixed major and minor increases)
@@ -86,7 +86,7 @@ YES (mixed major and minor increases)
 - exo.md v1.1
 
   - PRO - uniformity across baselines
-  - PRO - Workflow for bumping the ScubaGear version number in progress .
+  - PRO - Workflow for bumping the ScubaGear version number in progress.
   - CON - can cause a false sense of update for the user
   - CON - If a baseline does it update this will trigger all baselines and policy ID (if baseline version is used) to be updated 
   - CON - If we are keeping baseline version in the policy ID, an enhancement would need to be made to support minor increases in policy IDs
@@ -98,10 +98,10 @@ NO (mixed major and minor increases)
 - exo.md v1.4
 
   - PRO - Better alignment with updates to policies and updates for the reader to follow
-  - PRO - Workflow for bumping the ScubaGear version number in progress .
+  - PRO - Workflow for bumping the ScubaGear version number in progress.
   - CON - If we are keeping baseline version in the policy ID, an enhancement would need to be made to support minor increases in policy IDs
 
-## Deleted Policy Formating:
+## Deleted Policy Formatting:
 ### Potentially adding in a separate md file for deleted policies
   - PRO removes clutter of removed policies from markdown file
   - CON may cause numbering gaps without full context
@@ -114,19 +114,19 @@ NO (mixed major and minor increases)
   - PRO currently the code does read "X" as deleted policies and can return text in the results column
   - CON can cause confusion to the user due to change in format
 
-### Using strikethrough formatting (used for policy ID, Policy, rationale, and implmentation steps)
+### Using strikethrough formatting (used for policy ID, Policy, rationale, and implementation steps)
   - PRO easy identifier for the user to see policies that have been deleted
   - CON enhancement is needed to update automation to support strikethrough if we still want the policy to be added to report)
 
 ### Adding in a new policy note section below rationale and note
  Format: MS.M365PRODUCT.GROUP#.POLICY#v# was removed in M365PRODUCT.md v[] because [rationale for removal]
  EXAMPLE: 
- - _Policy Note:_ Policy MS.EXO.2.1v1 was removed in exo.md version 1.1.0 because it is not a security configuation that can be audited and has been added to MS.EXO.2.2v2.
+ - _Policy Note:_ Policy MS.EXO.2.1v1 was removed in exo.md version 1.1.0 because it is not a security configuration that can be audited and has been added to MS.EXO.2.2v2.
   
   - PRO does not clash with existing note section
   - PRO provides the version of the baseline the policy was removed and rationale
 
-### Deleting the policy and implmentation and only noting the removal in the changelog
+### Deleting the policy and implementation and only noting the removal in the changelog
 - PRO Do not have to worry about formatting and scalability
 - CON may cause confusion for users who do not read the changelog
 
@@ -144,8 +144,6 @@ NO (mixed major and minor increases)
 - updated MS.EXO.2.2v2 last modified date
 - in implementation section updated version number in deleted policy to "X"
 - used strikethrough for implementation section
-
-
 
 
 
