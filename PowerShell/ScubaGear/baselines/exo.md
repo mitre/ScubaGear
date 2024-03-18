@@ -5,7 +5,7 @@
 - CON Will need to update all policies regardless change if a policy in the baseline has updated (in the markdown and all other hardcoded instances (e.g. functional tests, .md files, rego))
 - CON May cause a false sense of a policy change for users
 - PRO Allows exact identification of a policy to a baseline for troubleshooting efforts 
-- PRO David has noted he has started working on a automated way to increment baseline md files (for GWS)
+- PRO Workflow for bumping the ScubaGear version number in progress 
 
 #### Example:
 MS.EXO.1.1v1 Policy has updated in latest release of exo.md baseline:\
@@ -41,11 +41,11 @@ last modified: June 2023      -> last modified: June 2023
 ## Major & Minor increment changes for versions:
 ### Baseline:
 Only Major increments: EXO.md v1.0 -> EXO.md v2.0  
-- PRO David has noted he has started working on a automated way to increment baseline md files (for GWS).
+- PRO Workflow for bumping the ScubaGear version number in progress .
 - CON may cause a false sense in update for the user without reading the details in the changelog
 
 Mixed Major and Minor increases: EXO.md v1.0 -> EXO.md v1.1 -> EXO.md v2.0  
-- PRO David has noted he has started working on a automated way to increment baseline md files (for GWS). David noted that this can be adjusted for minor increases.
+- PRO Workflow for bumping the ScubaGear version number in progress . David noted that this can be adjusted for minor increases.
 - PRO allows the team to better define major and minor updates
 - CON If we are keeping baseline version in the policy ID, an enhancement would need to be made to support minor increases in policy IDs
 
@@ -66,7 +66,7 @@ YES (major increases only)
 - exo.md v2.0
 
   - PRO - uniformity across baselines
-  - PRO - David has noted he has started working on a automated way to increment baseline md files (for GWS).
+  - PRO - Workflow for bumping the ScubaGear version number in progress .
   - CON - can cause a false sense of update for the user
   - CON - If a baseline does it update this will trigger all baselines and policy ID (if baseline version is used) to be updated 
 
@@ -77,7 +77,7 @@ NO (major increases only)
 - exo.md v1.0
 
   - PRO - Better alignment with updates to policies and updates for the reader to follow
-  - PRO - David has noted he has started working on a automated way to increment baseline md files (for GWS).
+  - PRO - Workflow for bumping the ScubaGear version number in progress .
 
 
 YES (mixed major and minor increases)
@@ -86,7 +86,7 @@ YES (mixed major and minor increases)
 - exo.md v1.1
 
   - PRO - uniformity across baselines
-  - PRO - David has noted he has started working on a automated way to increment baseline md files (for GWS).
+  - PRO - Workflow for bumping the ScubaGear version number in progress .
   - CON - can cause a false sense of update for the user
   - CON - If a baseline does it update this will trigger all baselines and policy ID (if baseline version is used) to be updated 
   - CON - If we are keeping baseline version in the policy ID, an enhancement would need to be made to support minor increases in policy IDs
@@ -98,7 +98,7 @@ NO (mixed major and minor increases)
 - exo.md v1.4
 
   - PRO - Better alignment with updates to policies and updates for the reader to follow
-  - PRO - David has noted he has started working on a automated way to increment baseline md files (for GWS).
+  - PRO - Workflow for bumping the ScubaGear version number in progress .
   - CON - If we are keeping baseline version in the policy ID, an enhancement would need to be made to support minor increases in policy IDs
 
 ## Deleted Policy Formating:
@@ -144,6 +144,8 @@ NO (mixed major and minor increases)
 - updated MS.EXO.2.2v2 last modified date
 - in implementation section updated version number in deleted policy to "X"
 - used strikethrough for implementation section
+
+
 
 
 
