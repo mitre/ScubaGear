@@ -6,15 +6,9 @@ InModuleScope Orchestrator {
         BeforeAll {
             Mock -CommandName Join-Path { "." }
             Mock -CommandName Out-File {}
-            Mock -CommandName Set-Content {}
             Mock -CommandName Remove-Item {}
             Mock -CommandName Get-Content { "" }
-            Mock -CommandName ConvertFrom-Json { @{
-                "ReportSummary"=@{"Date"=""}
-                "Results"=@();
-                "timestamp_zulu"="";
-            }
-            }
+            Mock -CommandName ConvertFrom-Json { @{"ReportSummary"=@{"Date"=""}; "Results"=@();} }
             Mock -CommandName Add-Member {}
             Mock -CommandName ConvertTo-Json { "" }
         }
@@ -34,7 +28,7 @@ InModuleScope Orchestrator {
                     ProductNames = @("aad")
                 }
                 { Merge-JsonOutput @JsonParameters} | Should -Not -Throw
-                Should -Invoke -CommandName ConvertFrom-Json -Exactly -Times 2
+                Should -Invoke -CommandName ConvertFrom-Json -Exactly -Times 1
                 $JsonParameters.ProductNames = @()
             }
             It 'Merge multiple results' {
@@ -42,7 +36,7 @@ InModuleScope Orchestrator {
                     ProductNames = @("aad", "teams")
                 }
                 { Merge-JsonOutput @JsonParameters} | Should -Not -Throw
-                Should -Invoke -CommandName ConvertFrom-Json -Exactly -Times 3
+                Should -Invoke -CommandName ConvertFrom-Json -Exactly -Times 2
                 $JsonParameters.ProductNames = @()
             }
             It 'Delete redundant files' {

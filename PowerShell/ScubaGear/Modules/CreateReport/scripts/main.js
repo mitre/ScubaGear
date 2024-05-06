@@ -2,8 +2,7 @@
  * Adds the red, green, yellow, and gray coloring to the individual report pages.
  */
 const colorRows = () => {
-    //Adjusted the querySelector to only use the rows which have policy data within them instead of every table in report
-    let rows = document.querySelectorAll('.policy-data tr');
+    let rows = document.querySelectorAll('tr');
     const requirementCol = 1;
     const statusCol = 2;
     const criticalityCol = 3;

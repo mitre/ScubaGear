@@ -156,7 +156,7 @@ function Invoke-ControlGroupItem {
 
             elseif(Test-Path -Path $Filename.Fullname -PathType Leaf) {
                 Write-Output "`nTesting Control Group $ControlGroup"
-                & $OPAExe test $RegoPolicyPath .\$($Filename.Fullname) $Flag
+                ..\opa_windows_amd64.exe test $RegoPolicyPath .\$($Filename.Fullname) $Flag
             }
             else {
                 Get-ErrorMsg FileIOError, $Filename
@@ -194,7 +194,7 @@ function Invoke-TestName {
 
                 if ($Match){
                     Write-Output "`nTesting $Test"
-                    & $OPAExe test $RegoPolicyPath .\$($Filename.Fullname) -r $Test $Flag
+                    ..\opa_windows_amd64.exe test $RegoPolicyPath .\$($Filename.Fullname) -r $Test $Flag
                 }
                 else{
                     Write-Warning "`nNOT FOUND: $Test in $Filename"

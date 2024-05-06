@@ -583,7 +583,6 @@ function Invoke-ProviderList {
             $ProviderJSON = $ProviderJSON.TrimEnd(",")
             $TimeZone = ""
             $CurrentDate = Get-Date -ErrorAction 'Stop'
-            $TimestampZulu = $CurrentDate.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ")
             $GetTimeZone = Get-TimeZone -ErrorAction 'Stop'
             if (($CurrentDate).IsDaylightSavingTime()) {
                 $TimeZone = ($GetTimeZone).DaylightName
@@ -602,7 +601,6 @@ function Invoke-ProviderList {
                 "baseline_version": "1",
                 "module_version": "$ModuleVersion",
                 "date": "$($CurrentDate) $($TimeZone)",
-                "timestamp_zulu": "$($TimestampZulu)",
                 "tenant_details": $($TenantDetails),
                 "scuba_config": $($ConfigDetails),
 
@@ -814,24 +812,6 @@ function Merge-JsonOutput {
     )
     process {
         try {
-            # Files to delete at the end if no errors are encountered
-            $DeletionList = @()
-
-            # Load the raw provider output
-            $SettingsExportPath = Join-Path $OutFolderPath -ChildPath "$($OutProviderFileName).json"
-            $DeletionList += $SettingsExportPath
-            $SettingsExport =  Get-Content $SettingsExportPath -Raw
-            $TimestampZulu = $(ConvertFrom-Json $SettingsExport).timestamp_zulu
-
-            # Get a list and abbreviation mapping of the products assessed
-            $FullNames = @()
-            $ProductAbbreviationMapping = @{}
-            foreach ($ProductName in $ProductNames) {
-                $BaselineName = $ArgToProd[$ProductName]
-                $FullNames += $ProdToFullName[$BaselineName]
-                $ProductAbbreviationMapping[$ProdToFullName[$BaselineName]] = $BaselineName
-            }
-
             # Extract the metadata
             $Results = [pscustomobject]@{}
             $Summary = [pscustomobject]@{}
@@ -839,14 +819,13 @@ function Merge-JsonOutput {
                 "TenantId" = $TenantDetails.TenantId;
                 "DisplayName" = $TenantDetails.DisplayName;
                 "DomainName" = $TenantDetails.DomainName;
-                "ProductSuite" = "Microsoft 365";
-                "ProductsAssessed" = $FullNames;
-                "ProductAbbreviationMapping" = $ProductAbbreviationMapping
+                "Product" = "M365";
                 "Tool" = "ScubaGear";
                 "ToolVersion" = $ModuleVersion;
-                "TimestampZulu" = $TimestampZulu;
             }
 
+            # Files to delete at the end if no errors are encountered
+            $DeletionList = @()
 
             # Aggregate the report results and summaries
             $IndividualReportPath = Join-Path -Path $OutFolderPath $IndividualReportFolderName -ErrorAction 'Stop'
@@ -855,7 +834,6 @@ function Merge-JsonOutput {
                 $FileName = Join-Path $IndividualReportPath "$($BaselineName)Report.json"
                 $DeletionList += $FileName
                 $IndividualResults = Get-Content $FileName | ConvertFrom-Json
-
                 $Results | Add-Member -NotePropertyName $BaselineName `
                     -NotePropertyValue $IndividualResults.Results
 
@@ -866,9 +844,14 @@ function Merge-JsonOutput {
                     -NotePropertyValue $IndividualResults.ReportSummary
             }
 
+            # Load the raw provider output
+            $SettingsFileName = Join-Path -Path $OutFolderPath -ChildPath "$($OutProviderFileName).json"
+            $DeletionList += $SettingsFileName
+            $SettingsExport =  Get-Content $SettingsFileName -Raw
+
             # Convert the output a json string
-            $MetaData = ConvertTo-Json $MetaData -Depth 3
-            $Results = ConvertTo-Json $Results -Depth 5
+            $MetaData = ConvertTo-Json $MetaData
+            $Results = ConvertTo-Json $Results -Depth 3
             $Summary = ConvertTo-Json $Summary -Depth 3
             $ReportJson = @"
 {
@@ -887,7 +870,7 @@ function Merge-JsonOutput {
 
             # Save the file
             $JsonFileName = Join-Path -Path $OutFolderPath "$($OutJsonFileName).json" -ErrorAction 'Stop'
-            $ReportJson | Set-Content -Path $JsonFileName -Encoding $(Get-FileEncoding) -ErrorAction 'Stop'
+            $ReportJson | Out-File $JsonFileName
 
             # Delete the now redundant files
             foreach ($File in $DeletionList) {

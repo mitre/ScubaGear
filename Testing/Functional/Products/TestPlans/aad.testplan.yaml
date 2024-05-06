@@ -198,102 +198,13 @@ TestPlan:
         ExpectedResult: true
 
   - PolicyId: MS.AAD.3.3v1
-    TestDriver: RunCached
+    TestDriver: RunScuba
     Tests:
-      - TestDescription: MS.AAD.3.3v1 Not-applicable case - PhishingMFA Enforced MS Auth Enabled
-        Preconditions:
-          - Command: UpdateCachedConditionalAccessPolicyByName
-            Splat:
-              displayName: Automated Test 1 - DO NOT MODIFY
-              updates:
-                State: enabled
-                Conditions:
-                  Users:
-                    IncludeUsers: ["All"]
-                    ExcludeUsers: []
-                    IncludeGroups: []
-                    ExcludeGroups: []
-                    IncludeRoles: []
-                    ExcludeRoles: []
-                  Applications:
-                    IncludeApplications: ["All"]
-                    ExcludeApplications: []
-                GrantControls.AuthenticationStrength.AllowedCombinations:
-                  - "windowsHelloForBusiness"
-                  - "fido2"
-                  - "x509CertificateMultiFactor"
-          - Command: UpdateProviderExport
-            Splat:
-              updates:
-                authentication_method[0].authentication_method_feature_settings:
-                  - Id: MicrosoftAuthenticator
-                    State: enabled
-                    AdditionalProperties:
-                      featureSettings:
-                        displayAppInformationRequiredState:
-                          state: disabled
-                        displayLocationInformationRequiredState:
-                          state: disabled
-                      includeTargets:
-                        - id: "all_users"
+      - TestDescription: MS.AAD.3.3v1 Not Checked
+        Preconditions: []
         Postconditions: []
         IsNotChecked: true
         ExpectedResult: false
-      - TestDescription: MS.AAD.3.3v1 Not-applicable case - PhishingMFA Not Enforced MS Auth Disabled
-        Preconditions:
-          - Command: UpdateProviderExport
-            Splat:
-              updates:
-                authentication_method[0].authentication_method_feature_settings:
-                  - Id: MicrosoftAuthenticator
-                    State: disabled
-                    AdditionalProperties:
-                      featureSettings:
-                        displayAppInformationRequiredState:
-                          state: disabled
-                        displayLocationInformationRequiredState:
-                          state: disabled
-                      includeTargets:
-                        - id: "all_users"
-        Postconditions: []
-        IsNotChecked: true
-        ExpectedResult: false
-      - TestDescription: MS.AAD.3.3v1 Non-Compliant case - MS Auth App name and Geolocation disabled
-        Preconditions:
-          - Command: UpdateProviderExport
-            Splat:
-              updates:
-                authentication_method[0].authentication_method_feature_settings:
-                  - Id: MicrosoftAuthenticator
-                    State: enabled
-                    AdditionalProperties:
-                      featureSettings:
-                        displayAppInformationRequiredState:
-                          state: disabled
-                        displayLocationInformationRequiredState:
-                          state: disabled
-                      includeTargets:
-                        - id: "all_users"
-        Postconditions: []
-        ExpectedResult: false
-      - TestDescription: MS.AAD.3.3v1 Compliant case - MS Auth Configured Correctly
-        Preconditions:
-          - Command: UpdateProviderExport
-            Splat:
-              updates:
-                authentication_method[0].authentication_method_feature_settings:
-                  - Id: MicrosoftAuthenticator
-                    State: enabled
-                    AdditionalProperties:
-                      featureSettings:
-                        displayAppInformationRequiredState:
-                          state: enabled
-                        displayLocationInformationRequiredState:
-                          state: enabled
-                      includeTargets:
-                        - id: "all_users"
-        Postconditions: []
-        ExpectedResult: true
 
   - PolicyId: MS.AAD.3.4v1
     TestDriver: RunCached
@@ -303,7 +214,7 @@ TestPlan:
           - Command: UpdateProviderExport
             Splat:
               updates:
-                authentication_method[0].authentication_method_policy.PolicyMigrationState: preMigration
+                authentication_method[0].PolicyMigrationState: preMigration
         Postconditions: []
         ExpectedResult: false
       - TestDescription: MS.AAD.3.4v1 Compliant case - Migration complete
@@ -311,36 +222,28 @@ TestPlan:
           - Command: UpdateProviderExport
             Splat:
               updates:
-                authentication_method[0].authentication_method_policy.PolicyMigrationState: migrationComplete
+                authentication_method[0].PolicyMigrationState: migrationComplete
         Postconditions: []
         ExpectedResult: true
 
   - PolicyId: MS.AAD.3.5v1
     TestDriver: RunCached
     Tests:
-      - TestDescription: MS.AAD.3.5v1 Not-applicable case - preMigration but auth methods disabled
+      - TestDescription: MS.AAD.3.5v1 Non-compliant case - preMigration
         Preconditions:
           - Command: UpdateProviderExport
             Splat:
               updates:
-                authentication_method[0].authentication_method_policy.PolicyMigrationState: preMigration
-                authentication_method[0].authentication_method_feature_settings:
-                  - Id: Sms
-                    State: disabled
-                  - Id: Voice
-                    State: disabled
-                  - Id: Email
-                    State: disabled
+                authentication_method[0].PolicyMigrationState: preMigration
         Postconditions: []
-        IsNotChecked: true
         ExpectedResult: false
       - TestDescription: MS.AAD.3.5v1 Non-compliant case - Sms enabled
         Preconditions:
           - Command: UpdateProviderExport
             Splat:
               updates:
-                authentication_method[0].authentication_method_policy.PolicyMigrationState: migrationComplete
-                authentication_method[0].authentication_method_feature_settings:
+                authentication_method[0].PolicyMigrationState: migrationComplete
+                authentication_method[0].AuthenticationMethodConfigurations:
                   - Id: Sms
                     State: enabled
                   - Id: Voice
@@ -354,8 +257,8 @@ TestPlan:
           - Command: UpdateProviderExport
             Splat:
               updates:
-                authentication_method[0].authentication_method_policy.PolicyMigrationState: migrationComplete
-                authentication_method[0].authentication_method_feature_settings:
+                authentication_method[0].PolicyMigrationState: migrationComplete
+                authentication_method[0].AuthenticationMethodConfigurations:
                   - Id: Sms
                     State: disabled
                   - Id: Voice
@@ -369,8 +272,8 @@ TestPlan:
           - Command: UpdateProviderExport
             Splat:
               updates:
-                authentication_method[0].authentication_method_policy.PolicyMigrationState: migrationComplete
-                authentication_method[0].authentication_method_feature_settings:
+                authentication_method[0].PolicyMigrationState: migrationComplete
+                authentication_method[0].AuthenticationMethodConfigurations:
                   - Id: Sms
                     State: disabled
                   - Id: Voice
@@ -384,8 +287,8 @@ TestPlan:
           - Command: UpdateProviderExport
             Splat:
               updates:
-                authentication_method[0].authentication_method_policy.PolicyMigrationState: migrationComplete
-                authentication_method[0].authentication_method_feature_settings:
+                authentication_method[0].PolicyMigrationState: migrationComplete
+                authentication_method[0].AuthenticationMethodConfigurations:
                   - Id: Sms
                     State: disabled
                   - Id: Voice
@@ -674,29 +577,16 @@ TestPlan:
   - PolicyId: MS.AAD.5.2v1
     TestDriver: RunCached
     Tests:
-      - TestDescription: MS.AAD.5.2v1 Non-Compliant case - Allow user to consent to apps
+      - TestDescription: MS.AAD.5.2v1 Non-Compliant case - Allow users to consent to apps
         Preconditions:
           - Command: UpdateProviderExport
             Splat:
               updates:
                 authorization_policies[0].PermissionGrantPolicyIdsAssignedToDefaultUserRole:
                   - ManagePermissionGrantsForSelf.microsoft-user-default-legacy
-                  - ManagePermissionGrantsForOwnedResource.microsoft-dynamically-managed-permissions-for-chat
-                  - ManagePermissionGrantsForOwnedResource.microsoft-dynamically-managed-permissions-for-team
         Postconditions: []
         ExpectedResult: false
-      - TestDescription: MS.AAD.5.2v1 Non-Compliant case - Allow user to consent to verified apps
-        Preconditions:
-          - Command: UpdateProviderExport
-            Splat:
-              updates:
-                authorization_policies[0].PermissionGrantPolicyIdsAssignedToDefaultUserRole:
-                  - ManagePermissionGrantsForSelf.microsoft-user-default-low
-                  - ManagePermissionGrantsForOwnedResource.microsoft-dynamically-managed-permissions-for-chat
-                  - ManagePermissionGrantsForOwnedResource.microsoft-dynamically-managed-permissions-for-team
-        Postconditions: []
-        ExpectedResult: false
-      - TestDescription: MS.AAD.5.2v1 Compliant case - Do NOT allow users to consent to apps - empty grant policy
+      - TestDescription: MS.AAD.5.2v1 Compliant case - Do NOT allow users to consent to apps
         Preconditions:
           - Command: UpdateProviderExport
             Splat:
@@ -705,54 +595,41 @@ TestPlan:
                   []
         Postconditions: []
         ExpectedResult: true
-      - TestDescription: MS.AAD.5.2v1 Compliant case - Do NOT allow users to consent to apps - chat teams grant policy
-        Preconditions:
-          - Command: UpdateProviderExport
-            Splat:
-              updates:
-                authorization_policies[0].PermissionGrantPolicyIdsAssignedToDefaultUserRole:
-                  - ManagePermissionGrantsForOwnedResource.microsoft-dynamically-managed-permissions-for-chat
-                  - ManagePermissionGrantsForOwnedResource.microsoft-dynamically-managed-permissions-for-team
-        Postconditions: []
-        ExpectedResult: true
 
   - PolicyId: MS.AAD.5.3v1
     TestDriver: RunCached
     Tests:
-      - TestDescription: MS.AAD.5.3v1 Non-Compliant case - Empty Consent workflow configured
-        Preconditions:
-          - Command: UpdateProviderExport
-            Splat:
-              updates:
-                directory_settings:
-                  - DisplayName: Consent Policy Settings
-                    Values:
-                      - Name: EnableAdminConsentRequests
-                        Value: ""
-        Postconditions: []
-        ExpectedResult: false
       - TestDescription: MS.AAD.5.3v1 Non-Compliant case - No Admin Consent workflow configured
         Preconditions:
           - Command: UpdateProviderExport
             Splat:
               updates:
-                directory_settings:
-                  - DisplayName: Consent Policy Settings
-                    Values:
-                      - Name: EnableAdminConsentRequests
-                        Value: "false"
+                directory_settings[0].DisplayName: Consent Policy Settings
+                directory_settings[0].Values:
+                  - Name: EnableAdminConsentRequests
+                    Value: ""
         Postconditions: []
         ExpectedResult: false
-      - TestDescription: MS.AAD.5.3v1 Compliant case - Admin Consent workflow is configured
+      - TestDescription: MS.AAD.5.3v1 Non-Compliant case - No Admin Consent workflow configured false
         Preconditions:
           - Command: UpdateProviderExport
             Splat:
               updates:
-                directory_settings:
-                  - DisplayName: Consent Policy Settings
-                    Values:
-                      - Name: EnableAdminConsentRequests
-                        Value: "true"
+                directory_settings[0].DisplayName: Consent Policy Settings
+                directory_settings[0].Values:
+                  - Name: EnableAdminConsentRequests
+                    Value: "false"
+        Postconditions: []
+        ExpectedResult: false
+      - TestDescription: MS.AAD.5.3v1 Compliant case - Admin Consent workflow is configured true
+        Preconditions:
+          - Command: UpdateProviderExport
+            Splat:
+              updates:
+                directory_settings[0].DisplayName: Consent Policy Settings
+                directory_settings[0].Values:
+                  - Name: EnableAdminConsentRequests
+                    Value: "true"
         Postconditions: []
         ExpectedResult: true
 

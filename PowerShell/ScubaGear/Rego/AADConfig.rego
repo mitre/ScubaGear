@@ -178,7 +178,7 @@ tests contains {
 # If policy matches basic conditions, special conditions,
 # all exclusions are intentional, & none but acceptable MFA
 # are allowed, save the policy name
-PhishingResistantMFAPolicies contains CAPolicy.DisplayName if {
+MFAPolicies contains CAPolicy.DisplayName if {
     some CAPolicy in input.conditional_access_policies
 
     "All" in CAPolicy.Conditions.Users.IncludeUsers
@@ -197,12 +197,12 @@ tests contains {
     "PolicyId": "MS.AAD.3.1v1",
     "Criticality": "Shall",
     "Commandlet": ["Get-MgBetaIdentityConditionalAccessPolicy"],
-    "ActualValue": PhishingResistantMFAPolicies,
-    "ReportDetails": concat(". ", [ReportFullDetailsArray(PhishingResistantMFAPolicies, DescriptionString), CAPLINK]),
+    "ActualValue": MFAPolicies,
+    "ReportDetails": concat(". ", [ReportFullDetailsArray(MFAPolicies, DescriptionString), CAPLINK]),
     "RequirementMet": Status
 } if {
     DescriptionString := "conditional access policy(s) found that meet(s) all requirements"
-    Status := count(PhishingResistantMFAPolicies) > 0
+    Status := count(MFAPolicies) > 0
 }
 #--
 
@@ -210,10 +210,10 @@ tests contains {
 # MS.AAD.3.2v1
 #--
 
-# Save all policy names if PhishingResistantMFAPolicies exist
+# Save all policy names if MFAPolicies exist
 AlternativeMFA contains CAPolicy.DisplayName if {
     some CAPolicy in input.conditional_access_policies
-    Count(PhishingResistantMFAPolicies) > 0
+    Count(MFAPolicies) > 0
 }
 
 # If policy matches basic conditions, special conditions,
@@ -248,99 +248,55 @@ tests contains {
 # MS.AAD.3.3v1
 #--
 
-# Returns the MS Authenticator configuration settings
-MSAuth := auth_setting if {
-    some auth_method in input.authentication_method
-    some auth_setting in auth_method.authentication_method_feature_settings
-
-    auth_setting.Id == "MicrosoftAuthenticator"
-}
-
-# Returns true if MS Authenticator is enabled, false if it is not
-default MSAuthEnabled := false
-MSAuthEnabled := true if {
-    MSAuth.State == "enabled"
-}
-
-# Returns true if MS Authenticator is configured per the baseline, false if it is not
-default MSAuthProperlyConfigured := false
-MSAuthProperlyConfigured := true if {
-    MSAuth.State == "enabled"
-
-    # Make sure that MS Auth shows the app name and geographic location
-    Settings := MSAuth.AdditionalProperties.featureSettings
-    Settings.displayAppInformationRequiredState.state == "enabled"
-    Settings.displayLocationInformationRequiredState.state == "enabled"
-
-    # Make sure that the configuration applies to all users
-    some target in MSAuth.AdditionalProperties.includeTargets
-    target.id == "all_users"
-}
-
-default AAD_3_3_Not_Applicable := false
-# Returns true no matter what if phishing-resistant MFA is being enforced
-AAD_3_3_Not_Applicable := true if {
-    count(PhishingResistantMFAPolicies) > 0
-}
-
-# Returns true if phishing-resistant MFA is not being enforced but MS Auth is disabled
-AAD_3_3_Not_Applicable := true if {
-    count(PhishingResistantMFAPolicies) == 0
-    MSAuthEnabled == false
-}
-
-# First test is for N/A case
-tests contains {
-    "PolicyId": PolicyId,
-    "Criticality": "Shall/Not-Implemented",
-    "Commandlet": ["Get-MgBetaPolicyAuthenticationMethodPolicy"],
-    "ActualValue": [],
-    "ReportDetails": CheckedSkippedDetails(PolicyId, Reason),
-    "RequirementMet": false
-} if {
-    PolicyId := "MS.AAD.3.3v1"
-    # regal ignore:line-length
-    Reason := "This policy is only applicable if phishing-resistant MFA is not enforced and MS Authenticator is enabled. See %v for more info"
-    AAD_3_3_Not_Applicable == true
-}
-
-# If policy is not N/A then we check that the configuration matches the baseline
+# At this time we are unable to test for X because of NEW POLICY
+# If we have acceptable MFA then policy passes otherwise MS Authenticator need to be
+# enabled to pass. However, we can not currently check if MS Authenticator enabled
 tests contains {
     "PolicyId": "MS.AAD.3.3v1",
     "Criticality": "Shall",
-    "Commandlet": ["Get-MgBetaPolicyAuthenticationMethodPolicy"],
-    "ActualValue": MSAuth,
-    "ReportDetails": ReportDetailsBoolean(Status),
+    "Commandlet": ["Get-MgBetaIdentityConditionalAccessPolicy"],
+    "ActualValue": MFAPolicies,
+    "ReportDetails": concat(". ", [ReportFullDetailsArray(MFAPolicies, DescriptionString), CAPLINK]),
     "RequirementMet": Status
 } if {
-    AAD_3_3_Not_Applicable == false
-
-    Status := MSAuthProperlyConfigured == true
+    DescriptionString := "conditional access policy(s) found that meet(s) all requirements"
+    Status := count(MFAPolicies) > 0
+    count(MFAPolicies) > 0
 }
+
+tests contains {
+    "PolicyId": PolicyId,
+    "Criticality": "Shall/Not-Implemented",
+    "Commandlet": [],
+    "ActualValue": [],
+    "ReportDetails": NotCheckedDetails(PolicyId),
+    "RequirementMet": false
+} if {
+    PolicyId := "MS.AAD.3.3v1"
+    count(MFAPolicies) == 0
+}
+#--
 
 #
 # MS.AAD.3.4v1
 #--
 
-# Returns the auth policy migration state object
-AuthenticationPolicyMigrationState := PolicyMigrationState if {
-    some Setting in input.authentication_method
-    PolicyMigrationState := Setting.authentication_method_policy.PolicyMigrationState
+PolicyMigrationIsComplete := Status if {
+    some Policy in input.authentication_method
+    Status := Policy.PolicyMigrationState == "migrationComplete"
 }
 
-# Returns true if the tenant has completed their authpolicy migration
-default AuthenticationPolicyMigrationIsComplete := false
-AuthenticationPolicyMigrationIsComplete if AuthenticationPolicyMigrationState == "migrationComplete"
-
+# At this time we are unable to test for X because of NEW POLICY
 tests contains {
     "PolicyId": "MS.AAD.3.4v1",
     "Criticality": "Shall",
     "Commandlet": ["Get-MgBetaPolicyAuthenticationMethodPolicy"],
-    "ActualValue": [AuthenticationPolicyMigrationState],
+    "ActualValue": [Policy.PolicyMigrationState],
     "ReportDetails": ReportDetailsBoolean(Status),
     "RequirementMet": Status
 } if {
-    Status := AuthenticationPolicyMigrationIsComplete
+    some Policy in input.authentication_method
+    Status := Policy.PolicyMigrationState == "migrationComplete"
 }
 #--
 
@@ -348,26 +304,19 @@ tests contains {
 # MS.AAD.3.5v1
 #--
 
-# Returns all the config states for the methods Sms, Voice, Email
-LowSecurityAuthMethods contains {
+GoodAuthenticationMethodConfigurations contains {
     "Id": Configuration.Id,
     "State": Configuration.State
 } if {
-    some Setting in input.authentication_method
-    some Configuration in Setting.authentication_method_feature_settings
+    some Item in input.authentication_method
+    some Configuration in Item.AuthenticationMethodConfigurations
     Configuration.Id in ["Sms", "Voice", "Email"]
+    Configuration.State == "disabled"
 }
 
-# Returns true only when all the low security auth methods are disabled per the policy
-default LowSecurityAuthMethodsDisabled := false
-LowSecurityAuthMethodsDisabled := true if {
-    every Config in LowSecurityAuthMethods { Config.State == "disabled" }
-}
-
-# First test is for N/A case
 tests contains {
     "PolicyId": PolicyId,
-    "Criticality": "Shall/Not-Implemented",
+    "Criticality": "Shall",
     "Commandlet": ["Get-MgBetaPolicyAuthenticationMethodPolicy"],
     "ActualValue": [],
     "ReportDetails": CheckedSkippedDetails("MS.AAD.3.4v1", Reason),
@@ -376,21 +325,21 @@ tests contains {
     PolicyId := "MS.AAD.3.5v1"
     # regal ignore:line-length
     Reason := "This policy is only applicable if the tenant has their Manage Migration feature set to Migration Complete. See %v for more info"
-    AuthenticationPolicyMigrationIsComplete != true
+    PolicyMigrationIsComplete != true
 }
 
-# If policy is not N/A then we check that the configuration matches the baseline
 tests contains {
     "PolicyId": "MS.AAD.3.5v1",
     "Criticality": "Shall",
     "Commandlet": ["Get-MgBetaPolicyAuthenticationMethodPolicy"],
-    "ActualValue": [LowSecurityAuthMethods],
+    "ActualValue": [],
     "ReportDetails": ReportDetailsString(Status, ErrorMessage),
     "RequirementMet": Status
 } if {
     ErrorMessage := "Sms, Voice, and Email authentication must be disabled."
-    AuthenticationPolicyMigrationIsComplete == true
-    Status := LowSecurityAuthMethodsDisabled
+    PolicyMigrationIsComplete == true
+    Conditions := [PolicyMigrationIsComplete == true, count(GoodAuthenticationMethodConfigurations) == 3]
+    Status := count(FilterArray(Conditions, false)) == 0
 }
 #--
 
@@ -571,18 +520,14 @@ tests contains {
 # MS.AAD.5.2v1
 #--
 
-# Return the Id if non-compliant user consent policies
+# Save the policy Id of any user allowed to consent to third
+# party applications
 BadDefaultGrantPolicies contains Policy.Id if {
     some Policy in input.authorization_policies
-    "ManagePermissionGrantsForSelf.microsoft-user-default-legacy" in Policy.PermissionGrantPolicyIdsAssignedToDefaultUserRole
+    count(Policy.PermissionGrantPolicyIdsAssignedToDefaultUserRole) != 0
 }
 
-BadDefaultGrantPolicies contains Policy.Id if {
-    some Policy in input.authorization_policies
-    "ManagePermissionGrantsForSelf.microsoft-user-default-low" in Policy.PermissionGrantPolicyIdsAssignedToDefaultUserRole
-}
-
-# Return all policy Ids
+# Get all policy Ids
 AllDefaultGrantPolicies contains {
     "DefaultUser_DefaultGrantPolicy": Policy.PermissionGrantPolicyIdsAssignedToDefaultUserRole,
     "PolicyId": Policy.Id
@@ -590,7 +535,7 @@ AllDefaultGrantPolicies contains {
     some Policy in input.authorization_policies
 }
 
-# If there is a policy that allows user to consent to third party apps, fail
+# If there is a policy that allows user to cconsent to third party apps, fail
 tests contains {
     "PolicyId": "MS.AAD.5.2v1",
     "Criticality": "Shall",
