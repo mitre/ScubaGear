@@ -40,9 +40,14 @@ function Export-AADProvider {
 
     $AllPolicies = ConvertTo-Json -Depth 10 @($AllPolicies)
 
+    $SubscribedSku = $Tracker.TryCommand("Get-MgBetaSubscribedSku")
+
     # Get a list of the tenant's provisioned service plans - used to see if the tenant has AAD premium p2 license required for some checks
     # The Rego looks at the service_plans in the JSON
-    $ServicePlans = $Tracker.TryCommand("Get-MgBetaSubscribedSku").ServicePlans | Where-Object -Property ProvisioningStatus -eq -Value "Success"
+    $ServicePlans = $SubscribedSku.ServicePlans | Where-Object -Property ProvisioningStatus -eq -Value "Success"
+
+    #Obtains license information for tenant and total number of active users
+    $LicenseInfo = $SubscribedSku | Select-Object -Property Sku*, ConsumedUnits, PrepaidUnits | ConvertTo-Json -Depth 3
 
     if ($ServicePlans) {
         # The RequiredServicePlan variable is used so that PIM Cmdlets are only executed if the tenant has the premium license
@@ -89,9 +94,6 @@ function Export-AADProvider {
     }
     $ServicePlans = ConvertTo-Json -Depth 3 @($ServicePlans)
 
-    #Obtains license information for tenant and total number of active users
-    $LicenseInfo = $Tracker.TryCommand("Get-MgBetaSubscribedSku") | Select-Object -Property Sku*, ConsumedUnits, PrepaidUnits | ConvertTo-Json -Depth 3
-
     # Checking to ensure command runs successfully
     $UserCount = $Tracker.TryCommand("Get-MgBetaUserCount", @{"ConsistencyLevel"='eventual'})
 
@@ -105,10 +107,25 @@ function Export-AADProvider {
     # 5.3, 5.4
     $DirectorySettings = ConvertTo-Json -Depth 10 @($Tracker.TryCommand("Get-MgBetaDirectorySetting"))
 
-    # Read the properties and relationships of an authentication method policy
-    $AuthenticationMethodPolicy = ConvertTo-Json @($Tracker.TryCommand("Get-MgBetaPolicyAuthenticationMethodPolicy")) -Depth 5
+    ##### This block of code below supports 3.3, 3.4, 3.5
+    $AuthenticationMethodPolicyRootObject = $Tracker.TryCommand("Get-MgBetaPolicyAuthenticationMethodPolicy")
 
-    # 6.1
+    $AuthenticationMethodFeatureSettings = @($AuthenticationMethodPolicyRootObject.AuthenticationMethodConfigurations | Where-Object { $_.Id})
+
+    # Exclude the AuthenticationMethodConfigurations so we do not duplicate it in the JSON
+    $AuthenticationMethodPolicy = $AuthenticationMethodPolicyRootObject | ForEach-Object {
+        $_ | Select-Object * -ExcludeProperty AuthenticationMethodConfigurations
+    }
+
+    $AuthenticationMethodObjects = @{
+        authentication_method_policy = $AuthenticationMethodPolicy
+        authentication_method_feature_settings = $AuthenticationMethodFeatureSettings
+    }
+
+    $AuthenticationMethod = ConvertTo-Json -Depth 10 @($AuthenticationMethodObjects)
+    ##### End block
+
+   # 6.1
     $DomainSettings = ConvertTo-Json @($Tracker.TryCommand("Get-MgBetaDomain"))
 
     $SuccessfulCommands = ConvertTo-Json @($Tracker.GetSuccessfulCommands())
@@ -123,7 +140,7 @@ function Export-AADProvider {
     "privileged_roles": $PrivilegedRoles,
     "service_plans": $ServicePlans,
     "directory_settings": $DirectorySettings,
-    "authentication_method": $AuthenticationMethodPolicy,
+    "authentication_method": $AuthenticationMethod,
     "domain_settings": $DomainSettings,
     "license_information": $LicenseInfo,
     "total_user_count": $UserCount,
@@ -134,6 +151,9 @@ function Export-AADProvider {
     $json
 }
 
+    #"authentication_method_policy": $AuthenticationMethodPolicy,
+    #"authentication_method_configuration":  $AuthenticationMethodConfiguration,
+    #"authentication_method_feature_settings": $AuthenticationMethodFeatureSettings,
 function Get-AADTenantDetail {
     <#
     .Description

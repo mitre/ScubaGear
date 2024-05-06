@@ -169,16 +169,22 @@ function New-Report {
         $GroupAnchor = New-MarkdownAnchor -GroupNumber $BaselineGroup.GroupNumber -GroupName $BaselineGroup.GroupName
         $MarkdownLink = "<a class='control_group' href=`"$($ScubaGitHubUrl)/blob/v$($SettingsExport.module_version)/PowerShell/ScubaGear/baselines/$($BaselineName.ToLower()).md$GroupAnchor`" target=`"_blank`">$Name</a>"
         $Fragments += $Fragment | ConvertTo-Html -PreContent "<h2>$Number $MarkdownLink</h2>" -Fragment
-        $ReportJson.Results += $Fragment
+
+        # Package Assessment Report into Report JSON by Policy Group
+        $ReportJson.Results += [pscustomobject]@{
+            GroupName = $BaselineGroup.GroupName;
+            GroupNumber = $BaselineGroup.GroupNumber;
+            Controls = $Fragment;
+        }
 
         # Regex will filter out any <table> tags without an id attribute (replace new fragments only, not <table> tags which have already been modified)
-        $Fragments = $Fragments -replace ".*(<table(?![^>]+id)*>)", "<table class='policy-data' id='$Number' style = 'text-align:center;'>"
+        $Fragments = $Fragments -replace ".*(<table(?![^>]+id)*>)", "<table class='policy-data' id='$Number'>"
     }
 
     # Craft the json report
     $ReportJson.ReportSummary = $ReportSummary
     $JsonFileName = Join-Path -Path $IndividualReportPath -ChildPath "$($BaselineName)Report.json"
-    $ReportJson = ConvertTo-Json @($ReportJson) -Depth 3
+    $ReportJson = ConvertTo-Json @($ReportJson) -Depth 5
 
     # ConvertTo-Json for some reason converts the <, >, and ' characters into unicode escape sequences.
     # Convert those back to ASCII.
@@ -204,13 +210,27 @@ function New-Report {
 
     # Handle AAD-specific reporting
     if ($BaselineName -eq "aad") {
+        $LicenseInfoArray = $SettingsExport.license_information | ForEach-Object {
+            [pscustomobject]@{
+                "License SKU Identifier" = $_.SkuPartNumber
+                "Licenses in Use" = $_.ConsumedUnits
+                "Total Licenses" = $_.PrepaidUnits.Enabled
+            }
+        }
+        # Convert the custom objects to an HTML table
+        $LicenseTable = $LicenseInfoArray | ConvertTo-Html -As Table -Fragment
+        $LicenseTable = $LicenseTable -replace '^(.*?)<table>','<table id="license-info" style = "text-align:center;">'
+
+        # Create a section header for the licensing information
+        $LicensingHTML = "<h2>Tenant Licensing Information</h2>" + $LicenseTable
+
         $ReportHTML = $ReportHTML.Replace("{AADWARNING}", $AADWarning)
-        $ReportHTML = $ReportHTML.Replace("{CAPTABLES}", "")
+        $ReportHTML = $ReportHTML.Replace("{LICENSING_INFO}", $LicensingHTML)
         $CapJson = ConvertTo-Json $SettingsExport.cap_table_data
     }
     else {
         $ReportHTML = $ReportHTML.Replace("{AADWARNING}", $NoWarning)
-        $ReportHTML = $ReportHTML.Replace("{CAPTABLES}", "")
+        $ReportHTML = $ReportHTML.Replace("{LICENSING_INFO}", "")
         $CapJson = "null"
     }
 
