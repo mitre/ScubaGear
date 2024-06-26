@@ -1,0 +1,17 @@
+{
+    "66b4d5c2-71c9-4644-8728-74e3a8324d81": {
+        "DisplayName": "John Public",
+        "roles": ["Hybrid Identity Administrator", "Privileged Role Administrator", "Application Administrator", "Exchange Administrator", "User Administrator", "Cloud Application Administrator", "Global Administrator", "SharePoint Administrator"],
+        "OnPremisesImmutableId": null
+    },
+    "b49c71b8-d1a0-4e36-8f6d-9e66fbb98f0d": {
+        "DisplayName": "Jane Doe",
+        "roles": ["Exchange Administrator", "Global Administrator", "SharePoint Administrator"],
+        "OnPremisesImmutableId": null
+    },
+    "1bdebb27-053d-48f2-9413-d836ebedf0e8": {
+        "DisplayName": "John Doe",
+        "roles": ["Exchange Administrator", "SharePoint Administrator", "SharePoint Administrator"],
+        "OnPremisesImmutableId": null
+    }
+}
