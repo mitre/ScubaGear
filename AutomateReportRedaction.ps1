@@ -71,7 +71,30 @@ function Update-Keys {
         elseif ($_.Value -is [array]) {
             if ($_.Name -eq 'BusinessPhones') {
                 $_.Value[0] = "1234567890"
-            } else {
+            } 
+            #TODO FIX
+            elseif ($_.Name -eq 'VerifiedDomains') {
+                $first = $true
+                for ($i=0; $i -lt $_.Value.Count; $i++) {
+                    if ($_.Value[$i].Name -eq 'tqhjy.onmicrosoft.com' -and $_.Value[$i].Capabilities -match 'Email' -and $_.Value[$i].Capabilities -match 'OfficeCommunicationsOnline') {
+                        if ($first) {
+                            $first = $false
+                        } else {
+                            $_.Value[$i] = $null
+                        }
+                    } else {
+                        $_.Value[$i] = $null
+                    }
+                }
+                $_.Value = $_.Value | Where-Object { $_ -ne $null }
+            } 
+            elseif ($_.Name -eq 'TechnicalNotificationMails') {
+                $_.Value = @("admin@example.com")
+            }
+            elseif ($_.Name -eq 'notificationRecipients' -and $_.Value.Count -gt 0) {
+                $_.Value = @("admin@example.com")
+            } 
+            else {
                 for ($i=0; $i -lt $_.Value.Count; $i++) {
                     if ($_.Value[$i] -is [PSObject]) {
                         Update-Keys -Object $_.Value[$i] -Keys $Keys
@@ -94,6 +117,6 @@ $jsonString = $jsonContent | ConvertTo-Json -Depth 20
 $jsonString = $jsonString -replace 'Cybersecurity and Infrastructure Security Agency', 'tqhjy'
 $jsonString = $jsonString -replace 'cisaent.mail', 'tqhjy'
 $jsonString = $jsonString -replace 'cisaent', 'tqhjy'
-#$jsonString = $jsonString -replace 'cisa', 'Scuba'
+#$jsonString = $jsonString -replace 'cisa', 'SCuBA'
 $jsonContent = $jsonString | ConvertFrom-Json
 $jsonContent | ConvertTo-Json -Depth 20 | Set-Content -Path $newJSONFilePath

@@ -729,38 +729,9 @@
                                                          "State":  null,
                                                          "Street":  null,
                                                          "TechnicalNotificationMails":  [
-                                                                                            "richard.manguel@cisa.dhs.gov"
+                                                                                            "admin@example.com"
                                                                                         ],
-                                                         "VerifiedDomains":  [
-                                                                                 {
-                                                                                     "Capabilities":  "Email, OfficeCommunicationsOnline",
-                                                                                     "IsDefault":  true,
-                                                                                     "IsInitial":  true,
-                                                                                     "Name":  "tqhjy.onmicrosoft.com",
-                                                                                     "Type":  "Managed"
-                                                                                 },
-                                                                                 {
-                                                                                     "Capabilities":  "Email, Intune",
-                                                                                     "IsDefault":  false,
-                                                                                     "IsInitial":  false,
-                                                                                     "Name":  "dhs.cisa.gov",
-                                                                                     "Type":  "Managed"
-                                                                                 },
-                                                                                 {
-                                                                                     "Capabilities":  "None",
-                                                                                     "IsDefault":  false,
-                                                                                     "IsInitial":  false,
-                                                                                     "Name":  "tqhjy.onmicrosoft.com",
-                                                                                     "Type":  "Managed"
-                                                                                 },
-                                                                                 {
-                                                                                     "Capabilities":  "Email",
-                                                                                     "IsDefault":  false,
-                                                                                     "IsInitial":  false,
-                                                                                     "Name":  "test365.cisa.dhs.gov",
-                                                                                     "Type":  "Managed"
-                                                                                 }
-                                                                             ],
+                                                         "VerifiedDomains":  null,
                                                          "AdditionalProperties":  {
                                                                                       "tenantType":  "AAD",
                                                                                       "onPremisesSyncStatus":  [
@@ -5765,7 +5736,7 @@
                                                                                 "notificationLevel":  "All",
                                                                                 "isDefaultRecipientsEnabled":  true,
                                                                                 "notificationRecipients":  [
-                                                                                                               "testme@gmail.com"
+                                                                                                               "admin@example.com"
                                                                                                            ]
                                                                             }
                                                },
@@ -6208,7 +6179,7 @@
                                                                                 "notificationLevel":  "All",
                                                                                 "isDefaultRecipientsEnabled":  true,
                                                                                 "notificationRecipients":  [
-                                                                                                               "testme@gmail.com"
+                                                                                                               "admin@example.com"
                                                                                                            ]
                                                                             }
                                                },
@@ -6369,7 +6340,7 @@
                                                                                 "notificationLevel":  "All",
                                                                                 "isDefaultRecipientsEnabled":  true,
                                                                                 "notificationRecipients":  [
-                                                                                                               "testme@gmail.com"
+                                                                                                               "admin@example.com"
                                                                                                            ]
                                                                             }
                                                },
@@ -6577,7 +6548,7 @@
                                                                                 "notificationLevel":  "All",
                                                                                 "isDefaultRecipientsEnabled":  true,
                                                                                 "notificationRecipients":  [
-                                                                                                               "testme@gmail.com"
+                                                                                                               "admin@example.com"
                                                                                                            ]
                                                                             }
                                                },
@@ -8793,7 +8764,7 @@
                                                                                 "notificationLevel":  "All",
                                                                                 "isDefaultRecipientsEnabled":  true,
                                                                                 "notificationRecipients":  [
-                                                                                                               "testme@gmail.com"
+                                                                                                               "admin@example.com"
                                                                                                            ]
                                                                             }
                                                },
@@ -8954,7 +8925,7 @@
                                                                                 "notificationLevel":  "All",
                                                                                 "isDefaultRecipientsEnabled":  true,
                                                                                 "notificationRecipients":  [
-                                                                                                               "testme@gmail.com"
+                                                                                                               "admin@example.com"
                                                                                                            ]
                                                                             }
                                                },
@@ -9157,7 +9128,7 @@
                                                                                 "notificationLevel":  "All",
                                                                                 "isDefaultRecipientsEnabled":  true,
                                                                                 "notificationRecipients":  [
-                                                                                                               "testme@gmail.com"
+                                                                                                               "admin@example.com"
                                                                                                            ]
                                                                             }
                                                },
@@ -22782,12 +22753,7 @@
                                   "TeamsUpgradePolicyIsReadOnly":  "ModeAndNotifications",
                                   "TenantId":  "3c19c757-3b55-411f-b03f-2bcc514a598d",
                                   "TnmAccountId":  null,
-                                  "VerifiedDomains":  [
-                                                          "Microsoft.Teams.ConfigAPI.Cmdlets.Generated.Models.TenantVerifiedSipDomain",
-                                                          "Microsoft.Teams.ConfigAPI.Cmdlets.Generated.Models.TenantVerifiedSipDomain",
-                                                          "Microsoft.Teams.ConfigAPI.Cmdlets.Generated.Models.TenantVerifiedSipDomain",
-                                                          "Microsoft.Teams.ConfigAPI.Cmdlets.Generated.Models.TenantVerifiedSipDomain"
-                                                      ],
+                                  "VerifiedDomains":  null,
                                   "WhenChanged":  null,
                                   "WhenCreated":  "Date(-62135596800000)",
                                   "LastProvisionTimeStamps":  {
