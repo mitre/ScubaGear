@@ -475,7 +475,7 @@
                                                                                     "Total":  300000,
                                                                                     "Used":  1128
                                                                                 },
-                                                         "DisplayName":  "Cybersecurity and Infrastructure Security Agency",
+                                                         "DisplayName":  "tqhjy",
                                                          "Extensions":  null,
                                                          "Id":  "3c19c757-3b55-411f-b03f-2bcc514a598d",
                                                          "IsMultipleDataLocationsForServicesEnabled":  null,
@@ -743,7 +743,7 @@
                                                                                      "Capabilities":  "Email, Intune",
                                                                                      "IsDefault":  false,
                                                                                      "IsInitial":  false,
-                                                                                     "Name":  "dhs.tqhjy.gov",
+                                                                                     "Name":  "dhs.cisa.gov",
                                                                                      "Type":  "Managed"
                                                                                  },
                                                                                  {
@@ -757,7 +757,7 @@
                                                                                      "Capabilities":  "Email",
                                                                                      "IsDefault":  false,
                                                                                      "IsInitial":  false,
-                                                                                     "Name":  "test365.tqhjy.dhs.gov",
+                                                                                     "Name":  "test365.cisa.dhs.gov",
                                                                                      "Type":  "Managed"
                                                                                  }
                                                                              ],
@@ -769,7 +769,7 @@
                                                                                   }
                                                      },
                                "TenantId":  "3c19c757-3b55-411f-b03f-2bcc514a598d",
-                               "DisplayName":  "Cybersecurity and Infrastructure Security Agency",
+                               "DisplayName":  "tqhjy",
                                "DomainName":  "tqhjy.onmicrosoft.com"
                            }
                        ],
@@ -1642,7 +1642,7 @@
                                                                                                                                ],
                                                                                                  "CreatedDateTime":  "Date(1662146338176)",
                                                                                                  "Description":  "",
-                                                                                                 "DisplayName":  "tqhjy Auth Strength",
+                                                                                                 "DisplayName":  "CISA Auth Strength",
                                                                                                  "Id":  "a7a09591-49c1-4f33-bb37-76f0b6abf067",
                                                                                                  "ModifiedDateTime":  "Date(1662146338176)",
                                                                                                  "PolicyType":  "custom",
@@ -2579,7 +2579,7 @@
                                                                                                                                ],
                                                                                                  "CreatedDateTime":  "Date(1662146338176)",
                                                                                                  "Description":  "",
-                                                                                                 "DisplayName":  "tqhjy Auth Strength",
+                                                                                                 "DisplayName":  "CISA Auth Strength",
                                                                                                  "Id":  "a7a09591-49c1-4f33-bb37-76f0b6abf067",
                                                                                                  "ModifiedDateTime":  "Date(1662146338176)",
                                                                                                  "PolicyType":  "custom",
@@ -4146,7 +4146,7 @@
                                "Conditions":  [
                                                   "Client apps included: all"
                                               ],
-                               "Block/Grant Access":  "Allow access but require authentication strength (tqhjy Auth Strength)",
+                               "Block/Grant Access":  "Allow access but require authentication strength (CISA Auth Strength)",
                                "Session Controls":  [
                                                         "None"
                                                     ]
@@ -4268,7 +4268,7 @@
                                "Conditions":  [
                                                   "Client apps included: all"
                                               ],
-                               "Block/Grant Access":  "Allow access but require authentication strength (tqhjy Auth Strength)",
+                               "Block/Grant Access":  "Allow access but require authentication strength (CISA Auth Strength)",
                                "Session Controls":  [
                                                         "None"
                                                     ]
@@ -11869,7 +11869,7 @@
                                 "AvailabilityStatus":  null,
                                 "DomainNameReferences":  null,
                                 "FederationConfiguration":  null,
-                                "Id":  "dhs.tqhjy.gov",
+                                "Id":  "dhs.cisa.gov",
                                 "IsAdminManaged":  true,
                                 "IsDefault":  false,
                                 "IsInitial":  false,
@@ -11926,7 +11926,7 @@
                                 "AvailabilityStatus":  null,
                                 "DomainNameReferences":  null,
                                 "FederationConfiguration":  null,
-                                "Id":  "test365.tqhjy.dhs.gov",
+                                "Id":  "test365.cisa.dhs.gov",
                                 "IsAdminManaged":  true,
                                 "IsDefault":  false,
                                 "IsInitial":  false,
@@ -16681,7 +16681,7 @@
 
                                                                                       ],
                                     "TargetedDomainsToProtect":  [
-                                                                     "tqhjy.mail.onmicrosoft.com"
+                                                                     "tqhjy.onmicrosoft.com"
                                                                  ],
                                     "TargetedDomainActionRecipients":  [
 
@@ -21118,7 +21118,7 @@
                        ],
     "spf_records":  [
                         {
-                            "domain":  "dhs.tqhjy.gov",
+                            "domain":  "dhs.cisa.gov",
                             "rdata":  [
                                           "v=spf1 include:spf.protection.outlook.com -all"
                                       ],
@@ -21126,7 +21126,7 @@
                                         {
                                             "query_method":  "traditional",
                                             "query_result":  "Query returned 1 txt records",
-                                            "query_name":  "dhs.tqhjy.gov"
+                                            "query_name":  "dhs.cisa.gov"
                                         }
                                     ]
                         },
@@ -21145,7 +21145,7 @@
                                     ]
                         },
                         {
-                            "domain":  "test365.tqhjy.dhs.gov",
+                            "domain":  "test365.cisa.dhs.gov",
                             "rdata":  [
                                           "v=spf1 include:spf.protection.outlook.com -all"
                                       ],
@@ -21153,7 +21153,7 @@
                                         {
                                             "query_method":  "traditional",
                                             "query_result":  "Query returned 1 txt records",
-                                            "query_name":  "test365.tqhjy.dhs.gov"
+                                            "query_name":  "test365.cisa.dhs.gov"
                                         }
                                     ]
                         },
@@ -21176,10 +21176,10 @@
                             "Domain":  "tqhjy.onmicrosoft.com",
                             "AdminDisplayName":  "",
                             "Selector1KeySize":  2048,
-                            "Selector1CNAME":  "selector1-tqhjy-onmicrosoft-com._domainkey.cisaent.onmicrosoft.com",
+                            "Selector1CNAME":  "selector1-tqhjy-onmicrosoft-com._domainkey.tqhjy.onmicrosoft.com",
                             "Selector1PublicKey":  "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxIvQ/US/JcVG2pXc+7czhQ99zqkp45NVQwpnOztIDOjbA3z/qD4Bfyou1mDW4wIzClJpF5D6rQ6+ednax5E5vScRacUrRWWiVfKl+wxM5DZutSMZVoIidBnR9Lia/e2IWfmG4Z//G6w0snWMaGLRTfRkJyqE4j43OAaqdmbRJgLJbN/W9QhZ8z0J5jBHarrfr1ZqjRolVqVnrgejzXMfOu5zjDoZxSGsozo3/ZwFJ3ggVOby7h/4VpwI8R2KksxVrKcTPtMc9lNLZtRRAoqKGHT8ZpfLHrE0mN1WfvVPu4bcyMkSkdYj4HCeSfk49sd8pgZ+ldSiKfzuoMVYJv6cBQIDAQAB;",
                             "Selector2KeySize":  2048,
-                            "Selector2CNAME":  "selector2-tqhjy-onmicrosoft-com._domainkey.cisaent.onmicrosoft.com",
+                            "Selector2CNAME":  "selector2-tqhjy-onmicrosoft-com._domainkey.tqhjy.onmicrosoft.com",
                             "Selector2PublicKey":  "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA3w+cAauvRpNSYt+Bur5b//X+B1stHa84qhA7e62L5aFJx1TIDG6dAJkmG5gj9rdO5aIraCcnOZzQUIjmZYVchnMOo4S8EsiDxSO83ieljX0b7rt8Hn/OoN21L5v/s8YtaHmaSql70bJ+wfM4zKkxUYWQwC0fqXAZEE4CIlkRprFpHi/bMhwMZYERkqhlTfLodTMFZkLCNdcUjf8h5Xaq4XElz9A5vg32tQfuPBlNtw1dNDdH2efXmsBbR9c/5wn3ZwGDTMHqKn30hXRlODXwQUIRXMVrCMzt6bSgP/iUMX47truhamV/m1vKuoj8iMW3Z53jLXYWtgBF4SEO+Kux3QIDAQAB;",
                             "Enabled":  false,
                             "IsDefault":  false,
@@ -21200,7 +21200,7 @@
                             "IsValid":  true,
                             "ExchangeVersion":  "0.20 (15.0.0.0)",
                             "Name":  "tqhjy.onmicrosoft.com",
-                            "DistinguishedName":  "CN=tqhjy.onmicrosoft.com,CN=Dkim Signing config,CN=Transport Settings,CN=Configuration,CN=cisaent.onmicrosoft.com,CN=ConfigurationUnits,DC=NAMPR09A006,DC=PROD,DC=OUTLOOK,DC=COM",
+                            "DistinguishedName":  "CN=tqhjy.onmicrosoft.com,CN=Dkim Signing config,CN=Transport Settings,CN=Configuration,CN=tqhjy.onmicrosoft.com,CN=ConfigurationUnits,DC=NAMPR09A006,DC=PROD,DC=OUTLOOK,DC=COM",
                             "ObjectCategory":  "NAMPR09A006.PROD.OUTLOOK.COM/Configuration/Schema/ms-Exch-Hosted-Content-Filter-Config",
                             "ObjectClass":  [
                                                 "top",
@@ -21308,7 +21308,7 @@
                             "ObjectState":  "Unchanged"
                         },
                         {
-                            "Domain":  "dhs.tqhjy.gov",
+                            "Domain":  "dhs.cisa.gov",
                             "AdminDisplayName":  "",
                             "Selector1KeySize":  2048,
                             "Selector1CNAME":  "selector1-dhs-cisa-gov._domainkey.tqhjy.onmicrosoft.com",
@@ -21330,11 +21330,11 @@
                             "SelectorBeforeRotateOnDate":  "selector1",
                             "SelectorAfterRotateOnDate":  "selector2",
                             "Status":  "Valid",
-                            "Identity":  "dhs.tqhjy.gov",
-                            "Id":  "dhs.tqhjy.gov",
+                            "Identity":  "dhs.cisa.gov",
+                            "Id":  "dhs.cisa.gov",
                             "IsValid":  true,
                             "ExchangeVersion":  "0.20 (15.0.0.0)",
-                            "Name":  "dhs.tqhjy.gov",
+                            "Name":  "dhs.cisa.gov",
                             "DistinguishedName":  "CN=dhs.cisa.gov,CN=Dkim Signing config,CN=Transport Settings,CN=Configuration,CN=tqhjy.onmicrosoft.com,CN=ConfigurationUnits,DC=NAMPR09A006,DC=PROD,DC=OUTLOOK,DC=COM",
                             "ObjectCategory":  "NAMPR09A006.PROD.OUTLOOK.COM/Configuration/Schema/ms-Exch-Hosted-Content-Filter-Config",
                             "ObjectClass":  [
@@ -21353,7 +21353,7 @@
                             "ObjectState":  "Unchanged"
                         },
                         {
-                            "Domain":  "associates.dhs.tqhjy.gov",
+                            "Domain":  "associates.dhs.cisa.gov",
                             "AdminDisplayName":  "",
                             "Selector1KeySize":  2048,
                             "Selector1CNAME":  "selector1-associates-dhs-cisa-gov._domainkey.tqhjy.onmicrosoft.com",
@@ -21375,11 +21375,11 @@
                             "SelectorBeforeRotateOnDate":  "selector2",
                             "SelectorAfterRotateOnDate":  "selector1",
                             "Status":  "Valid",
-                            "Identity":  "associates.dhs.tqhjy.gov",
-                            "Id":  "associates.dhs.tqhjy.gov",
+                            "Identity":  "associates.dhs.cisa.gov",
+                            "Id":  "associates.dhs.cisa.gov",
                             "IsValid":  true,
                             "ExchangeVersion":  "0.20 (15.0.0.0)",
-                            "Name":  "associates.dhs.tqhjy.gov",
+                            "Name":  "associates.dhs.cisa.gov",
                             "DistinguishedName":  "CN=associates.dhs.cisa.gov,CN=Dkim Signing config,CN=Transport Settings,CN=Configuration,CN=tqhjy.onmicrosoft.com,CN=ConfigurationUnits,DC=NAMPR09A006,DC=PROD,DC=OUTLOOK,DC=COM",
                             "ObjectCategory":  "NAMPR09A006.PROD.OUTLOOK.COM/Configuration/Schema/ms-Exch-Hosted-Content-Filter-Config",
                             "ObjectClass":  [
@@ -21398,7 +21398,7 @@
                             "ObjectState":  "Unchanged"
                         },
                         {
-                            "Domain":  "test365.tqhjy.dhs.gov",
+                            "Domain":  "test365.cisa.dhs.gov",
                             "AdminDisplayName":  "",
                             "Selector1KeySize":  2048,
                             "Selector1CNAME":  "selector1-test365-cisa-dhs-gov._domainkey.tqhjy.onmicrosoft.com",
@@ -21420,11 +21420,11 @@
                             "SelectorBeforeRotateOnDate":  "selector1",
                             "SelectorAfterRotateOnDate":  "selector2",
                             "Status":  "Valid",
-                            "Identity":  "test365.tqhjy.dhs.gov",
-                            "Id":  "test365.tqhjy.dhs.gov",
+                            "Identity":  "test365.cisa.dhs.gov",
+                            "Id":  "test365.cisa.dhs.gov",
                             "IsValid":  true,
                             "ExchangeVersion":  "0.20 (15.0.0.0)",
-                            "Name":  "test365.tqhjy.dhs.gov",
+                            "Name":  "test365.cisa.dhs.gov",
                             "DistinguishedName":  "CN=test365.cisa.dhs.gov,CN=Dkim Signing config,CN=Transport Settings,CN=Configuration,CN=tqhjy.onmicrosoft.com,CN=ConfigurationUnits,DC=NAMPR09A006,DC=PROD,DC=OUTLOOK,DC=COM",
                             "ObjectCategory":  "NAMPR09A006.PROD.OUTLOOK.COM/Configuration/Schema/ms-Exch-Hosted-Content-Filter-Config",
                             "ObjectClass":  [
@@ -21445,7 +21445,7 @@
                     ],
     "dkim_records":  [
                          {
-                             "domain":  "dhs.tqhjy.gov",
+                             "domain":  "dhs.cisa.gov",
                              "rdata":  [
                                            "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwFSu1nMh65jJ8aErOaJVvpebHMom45tQKfNK6/nQUgCg9ne8qFE0DyA0SdqtT3r4/uOzhFVxEYFT6rxqcD54BWVQ1hhdEeNbOhHiOjn+W8rLbNnejVUbk5tpjF9yHBkqrpRuJJKTOQTl+6Myqx2IqYA1PTM9Md94iOZNmxKyFlYzLr8QITRXtyQjtOlBE+7lf",
                                            "tsNTAQwnl34zfPZZPAhczn0UfeAYW4hcYO6BP0OHlcwyLOXRcHIdKZ6mNOog0wExCK98ryPQuNFqzDxSMOg3vjmrQiTJzDOgKBqZ3+/Zjvhfyh0iLxWIDxeUNBgbMEx5tCuyUuO2JI+vK/VeG1mGQIDAQAB;"
@@ -21454,7 +21454,7 @@
                                          {
                                              "query_method":  "traditional",
                                              "query_result":  "Query returned 2 txt records",
-                                             "query_name":  "selector1._domainkey.dhs.tqhjy.gov"
+                                             "query_name":  "selector1._domainkey.dhs.cisa.gov"
                                          }
                                      ]
                          },
@@ -21483,7 +21483,7 @@
                                      ]
                          },
                          {
-                             "domain":  "test365.tqhjy.dhs.gov",
+                             "domain":  "test365.cisa.dhs.gov",
                              "rdata":  [
                                            "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwVCM2ZRZbi+HfMpoGMmEuv+0x+Fc7++ObO11SXDvyrm5OhMGDzyR6lMJPRhovYu4y4WxgKvYtalHtORzIzbcs5+m07uee/bmz6vZJqsSc/52O0UJGHYpBAPWktBb5Trjaj4Hr26FkTIJCPxy4z8m4Wsx9/+jimn5cdb4zbQhnwccBii6wptEekvATQu6cX8vo",
                                            "gy8NDFr6wcSxcM923EQSUout2OrUGmkJnQvrkKvCCj4Gjt8ZNoGGaLpd+vzKVbvyHaLOMbVreIWTm6fg5vM0DDmhVwIAfHUhoOlLOQ5GiGM4pK+z6MMzvAJE3bTLEvuoAji96GDSlLU+Kj+6rOWMQIDAQAB;"
@@ -21492,12 +21492,12 @@
                                          {
                                              "query_method":  "traditional",
                                              "query_result":  "Query returned NXDomain",
-                                             "query_name":  "selector1._domainkey.test365.tqhjy.dhs.gov"
+                                             "query_name":  "selector1._domainkey.test365.cisa.dhs.gov"
                                          },
                                          {
                                              "query_method":  "traditional",
                                              "query_result":  "Query returned 2 txt records",
-                                             "query_name":  "selector2._domainkey.test365.tqhjy.dhs.gov"
+                                             "query_name":  "selector2._domainkey.test365.cisa.dhs.gov"
                                          }
                                      ]
                          },
@@ -21532,7 +21532,7 @@
                      ],
     "dmarc_records":  [
                           {
-                              "domain":  "dhs.tqhjy.gov",
+                              "domain":  "dhs.cisa.gov",
                               "rdata":  [
                                             "v=DMARC1; p=reject; sp=none;"
                                         ],
@@ -21540,7 +21540,7 @@
                                           {
                                               "query_method":  "traditional",
                                               "query_result":  "Query returned 1 txt records",
-                                              "query_name":  "_dmarc.dhs.tqhjy.gov"
+                                              "query_name":  "_dmarc.dhs.cisa.gov"
                                           }
                                       ]
                           },
@@ -21563,7 +21563,7 @@
                                       ]
                           },
                           {
-                              "domain":  "test365.tqhjy.dhs.gov",
+                              "domain":  "test365.cisa.dhs.gov",
                               "rdata":  [
                                             "v=DMARC1; p=reject; pct=100; rua=mailto:DMARC@hq.dhs.gov,  mailto:reports@dmarc.cyber.dhs.gov"
                                         ],
@@ -21571,7 +21571,7 @@
                                           {
                                               "query_method":  "traditional",
                                               "query_result":  "Query returned NXDomain",
-                                              "query_name":  "_dmarc.test365.tqhjy.dhs.gov"
+                                              "query_name":  "_dmarc.test365.cisa.dhs.gov"
                                           },
                                           {
                                               "query_method":  "traditional",
@@ -22219,7 +22219,7 @@
     "org_config":  [
                        {
                            "Name":  "tqhjy.onmicrosoft.com",
-                           "DisplayName":  "Cybersecurity and Infrastructure Security Agency",
+                           "DisplayName":  "tqhjy",
                            "AuditDisabled":  false
                        }
                    ],
@@ -22365,7 +22365,7 @@
                              },
                              {
                                  "EnvironmentName":  "Default-3c19c757-3b55-411f-b03f-2bcc514a598d",
-                                 "DisplayName":  "Cybersecurity and Infrastructure Security Agency (default) (org8537b7dc)",
+                                 "DisplayName":  "tqhjy (default) (org8537b7dc)",
                                  "Description":  null,
                                  "IsDefault":  true,
                                  "Location":  "usgov",
@@ -22386,7 +22386,7 @@
                                                   "type":  "Microsoft.BusinessAppPlatform/scopes/environments",
                                                   "location":  "usgov",
                                                   "name":  "Default-3c19c757-3b55-411f-b03f-2bcc514a598d",
-                                                  "properties":  "@{tenantId=3c19c757-3b55-411f-b03f-2bcc514a598d; azureRegionHint=usgovtexas; displayName=Cybersecurity and Infrastructure Security Agency (default) (org8537b7dc); createdTime=2021-12-13T20:40:14.1749137Z; createdBy=; provisioningState=Succeeded; creationType=DefaultTenant; environmentSku=Default; environmentType=Production; isDefault=True; permissions=; runtimeEndpoints=; linkedEnvironmentMetadata=; trialScenarioType=None; retentionPeriod=P7D; states=; updateCadence=; retentionDetails=; protectionStatus=; cluster=; connectedGroups=System.Object[]; lifecycleOperationsEnforcement=; governanceConfiguration=; bingChatEnabled=False}"
+                                                  "properties":  "@{tenantId=3c19c757-3b55-411f-b03f-2bcc514a598d; azureRegionHint=usgovtexas; displayName=tqhjy (default) (org8537b7dc); createdTime=2021-12-13T20:40:14.1749137Z; createdBy=; provisioningState=Succeeded; creationType=DefaultTenant; environmentSku=Default; environmentType=Production; isDefault=True; permissions=; runtimeEndpoints=; linkedEnvironmentMetadata=; trialScenarioType=None; retentionPeriod=P7D; states=; updateCadence=; retentionDetails=; protectionStatus=; cluster=; connectedGroups=System.Object[]; lifecycleOperationsEnforcement=; governanceConfiguration=; bingChatEnabled=False}"
                                               },
                                  "InternalCds":  null,
                                  "OrganizationId":  "ff4adc41-8f11-42a1-9e5a-d208f91a6db4",
@@ -22711,7 +22711,7 @@
                                   "CountryAbbreviation":  null,
                                   "DefaultPoolFqdn":  null,
                                   "DirSyncEnabled":  true,
-                                  "DisplayName":  "Cybersecurity and Infrastructure Security Agency",
+                                  "DisplayName":  "tqhjy",
                                   "LastSyncTimeStamp":  "Date(1714421480081)",
                                   "NameRecordingDisabled":  null,
                                   "Pools":  null,

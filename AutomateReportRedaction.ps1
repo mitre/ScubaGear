@@ -76,43 +76,24 @@ function Update-Keys {
                     if ($_.Value[$i] -is [PSObject]) {
                         Update-Keys -Object $_.Value[$i] -Keys $Keys
                     }
-                    elseif ($_.Value[$i] -match 'cisaent') {
-                        $_.Value[$i] = $_.Value[$i] -replace 'cisaent', 'tqhjy'
-                    }
-                    elseif ($_.Value[$i] -match 'cisaent.mail') {
-                        $_.Value[$i] = $_.Value[$i] -replace 'cisaent.mail', 'tqhjy'
-                    }
                 }
             }
         }
         elseif ($Keys -contains $_.Name) {
             $_.Value = $null
-        }
-        
-        elseif ($_.Value -match 'cisaent.mail') {
-            $_.Value = $_.Value -replace 'cisaent.mail', 'tqhjy'
-        }
-        
-        elseif ($_.Value -match 'cisaent') {
-            $_.Value = $_.Value -replace 'cisaent', 'tqhjy'
-        }
-
-        elseif ($_.Value -match 'cisa') {
-            $_.Value = $_.Value -replace 'cisa', 'tqhjy'
-        }
-
-        <#elseif ($_.Value -match 'cisa') {
-            $_.Value = $_.Value -replace 'cisa', 'tqhjy'
-        }#>
-        
+        }        
     }
 }
 
 # Specify the keys to update
 $keysToUpdate = @('BusinessPhones','City', 'Country', 'CountryLetterCode', 'CountryAbbreviation', 'State', 'Street', 'PostalCode')
+
 # Update the keys
 Update-Keys -Object $jsonContent -Keys $keysToUpdate
-# Convert the updated object back to JSON
-$jsonContent = $jsonContent | ConvertTo-Json -Depth 20
-# Write the updated content back to the JSON file
-$jsonContent | Set-Content -Path $newJSONFilePath
+$jsonString = $jsonContent | ConvertTo-Json -Depth 20
+$jsonString = $jsonString -replace 'Cybersecurity and Infrastructure Security Agency', 'tqhjy'
+$jsonString = $jsonString -replace 'cisaent.mail', 'tqhjy'
+$jsonString = $jsonString -replace 'cisaent', 'tqhjy'
+#$jsonString = $jsonString -replace 'cisa', 'Scuba'
+$jsonContent = $jsonString | ConvertFrom-Json
+$jsonContent | ConvertTo-Json -Depth 20 | Set-Content -Path $newJSONFilePath
