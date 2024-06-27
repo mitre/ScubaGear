@@ -101,7 +101,7 @@ function Update-Keys {
 }
 
 # Specify the keys to update
-$keysToUpdate = @('BusinessPhones','City', 'Country', 'CountryLetterCode', 'CountryAbbreviation', 'State', 'Street', 'PostalCode')
+$keysToUpdate = @('BusinessPhones','City', 'Country', 'CountryLetterCode', 'CountryAbbreviation', 'Street', 'PostalCode')
 
 # Update the keys
 Update-Keys -Object $jsonContent -Keys $keysToUpdate
