@@ -30,8 +30,6 @@ $privilegedUsers = Get-Content -Path $privilegedUsersFilePath | ConvertFrom-Json
 $usStateAbbreviations = @("AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY", "DC")
 
 
-#$jsonContent = Get-Content -Path $jsonFilePath | ConvertFrom-Json
-
 
 function Update-Keys {
     param(
@@ -66,6 +64,14 @@ function Update-Keys {
 
         elseif ($_.Name -eq 'domain_settings') {
             $_.Value = $_.Value | Where-Object { $_.Id -eq 'tqhjy.onmicrosoft.com' }
+        }
+
+        elseif ($_.Name -eq 'dkim_config' -or $_.Name -eq 'spf_records' -or $_.Name -eq 'dkim_records' -or $_.Name -eq 'dmarc_records') {
+            $_.Value = $_.Value | Where-Object { $_.Domain -match 'tqhjy' -or $_.domain -match 'tqhjy' }
+        }
+
+        elseif ($_.Name -eq "SipDomain") {
+            $_.Value = @('tqhjy.onmicrosoft.com')
         }
 
         elseif ($_.Name -eq 'properties' -and $_.Value -is [string]) {

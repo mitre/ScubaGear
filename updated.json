@@ -19107,19 +19107,6 @@
                        ],
     "spf_records":  [
                         {
-                            "domain":  "dhs.cisa.gov",
-                            "rdata":  [
-                                          "v=spf1 include:spf.protection.outlook.com -all"
-                                      ],
-                            "log":  [
-                                        {
-                                            "query_method":  "traditional",
-                                            "query_result":  "Query returned 1 txt records",
-                                            "query_name":  "dhs.cisa.gov"
-                                        }
-                                    ]
-                        },
-                        {
                             "domain":  "tqhjy.onmicrosoft.com",
                             "rdata":  [
                                           "v=spf1 include:spf.protection.outlook.com -all",
@@ -19130,19 +19117,6 @@
                                             "query_method":  "traditional",
                                             "query_result":  "Query returned 2 txt records",
                                             "query_name":  "tqhjy.onmicrosoft.com"
-                                        }
-                                    ]
-                        },
-                        {
-                            "domain":  "test365.cisa.dhs.gov",
-                            "rdata":  [
-                                          "v=spf1 include:spf.protection.outlook.com -all"
-                                      ],
-                            "log":  [
-                                        {
-                                            "query_method":  "traditional",
-                                            "query_result":  "Query returned 1 txt records",
-                                            "query_name":  "test365.cisa.dhs.gov"
                                         }
                                     ]
                         },
@@ -19295,158 +19269,9 @@
                             "Guid":  "8e977acc-dd79-4c83-be46-f792a515ab97",
                             "OriginatingServer":  "DM5PR09A006DC09.NAMPR09A006.PROD.OUTLOOK.COM",
                             "ObjectState":  "Unchanged"
-                        },
-                        {
-                            "Domain":  "dhs.cisa.gov",
-                            "AdminDisplayName":  "",
-                            "Selector1KeySize":  2048,
-                            "Selector1CNAME":  "selector1-dhs-cisa-gov._domainkey.tqhjy.onmicrosoft.com",
-                            "Selector1PublicKey":  "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwFSu1nMh65jJ8aErOaJVvpebHMom45tQKfNK6/nQUgCg9ne8qFE0DyA0SdqtT3r4/uOzhFVxEYFT6rxqcD54BWVQ1hhdEeNbOhHiOjn+W8rLbNnejVUbk5tpjF9yHBkqrpRuJJKTOQTl+6Myqx2IqYA1PTM9Md94iOZNmxKyFlYzLr8QITRXtyQjtOlBE+7lftsNTAQwnl34zfPZZPAhczn0UfeAYW4hcYO6BP0OHlcwyLOXRcHIdKZ6mNOog0wExCK98ryPQuNFqzDxSMOg3vjmrQiTJzDOgKBqZ3+/Zjvhfyh0iLxWIDxeUNBgbMEx5tCuyUuO2JI+vK/VeG1mGQIDAQAB;",
-                            "Selector2KeySize":  2048,
-                            "Selector2CNAME":  "selector2-dhs-cisa-gov._domainkey.tqhjy.onmicrosoft.com",
-                            "Selector2PublicKey":  "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmn5LZHYWK9CebUh/P+sris0fCvFhbwTQCGv9U/0QMtDygpX6AG8PUI4wAUURCQ3jESsh7OKARvukQ7T5E30FOA9GrEkRgLgQt//7KftdvWSakpCcNUUQ7IJllUEOKgxo04wZDY8gC66nMy7KvM63ja6+YhxbVJDbqextHYH5gTGGVQbM93Txt8WNQ0ws/IZljDlPv4/Cp+jPf1cnmdCngEWadlm8vT1gsD/eR1GcLL+VsnD1NoyRYwEPTsWTHEJVwki1KADdv1VvrUUWcZ6ofFoElbLydUCeDtDoELeqhUqvG8vFGce2cjGd+WkJ9l0YXeIsU9eY1HS+Dmq0A0gKhQIDAQAB;",
-                            "Enabled":  true,
-                            "IsDefault":  false,
-                            "HeaderCanonicalization":  "Relaxed",
-                            "BodyCanonicalization":  "Relaxed",
-                            "Algorithm":  "RsaSHA256",
-                            "NumberOfBytesToSign":  "All",
-                            "IncludeSignatureCreationTime":  true,
-                            "IncludeKeyExpiration":  false,
-                            "KeyCreationTime":  "Date(1626472130517)",
-                            "LastChecked":  "Date(1626472130517)",
-                            "RotateOnDate":  "Date(1626817730517)",
-                            "SelectorBeforeRotateOnDate":  "selector1",
-                            "SelectorAfterRotateOnDate":  "selector2",
-                            "Status":  "Valid",
-                            "Identity":  "dhs.cisa.gov",
-                            "Id":  "dhs.cisa.gov",
-                            "IsValid":  true,
-                            "ExchangeVersion":  "0.20 (15.0.0.0)",
-                            "Name":  "dhs.cisa.gov",
-                            "DistinguishedName":  "CN=dhs.cisa.gov,CN=Dkim Signing config,CN=Transport Settings,CN=Configuration,CN=tqhjy.onmicrosoft.com,CN=ConfigurationUnits,DC=NAMPR09A006,DC=PROD,DC=OUTLOOK,DC=COM",
-                            "ObjectCategory":  "NAMPR09A006.PROD.OUTLOOK.COM/Configuration/Schema/ms-Exch-Hosted-Content-Filter-Config",
-                            "ObjectClass":  [
-                                                "top",
-                                                "msExchHostedContentFilterConfig"
-                                            ],
-                            "WhenChanged":  "Date(1626472142000)",
-                            "WhenCreated":  "Date(1626471047000)",
-                            "WhenChangedUTC":  "Date(1626472142000)",
-                            "WhenCreatedUTC":  "Date(1626471047000)",
-                            "ExchangeObjectId":  "7218f0b3-d9ad-4964-be49-b7b1c0b635e4",
-                            "OrganizationalUnitRoot":  "tqhjy.onmicrosoft.com",
-                            "OrganizationId":  "NAMPR09A006.PROD.OUTLOOK.COM/Microsoft Exchange Hosted Organizations/tqhjy.onmicrosoft.com - NAMPR09A006.PROD.OUTLOOK.COM/ConfigurationUnits/tqhjy.onmicrosoft.com/Configuration",
-                            "Guid":  "7218f0b3-d9ad-4964-be49-b7b1c0b635e4",
-                            "OriginatingServer":  "DM5PR09A006DC09.NAMPR09A006.PROD.OUTLOOK.COM",
-                            "ObjectState":  "Unchanged"
-                        },
-                        {
-                            "Domain":  "associates.dhs.cisa.gov",
-                            "AdminDisplayName":  "",
-                            "Selector1KeySize":  2048,
-                            "Selector1CNAME":  "selector1-associates-dhs-cisa-gov._domainkey.tqhjy.onmicrosoft.com",
-                            "Selector1PublicKey":  "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwiJqFoGnKm/i107OGE0xPgaozjujMVN6EAqaJ4RqCqDaHoErrFbuev5u2D1ZlDAAn3aEJ2KvObey6sLl/OcsULS2rO9ooUAOL0tMUR+1bfFiNz8ypH3eJfL7UN5v2bS+xcauTMusMw9lq88mrC1loS78K1sYiqjnUiEIvExO6wEEKXO0mFPpJRkG4pN+TmiByAAabzx+XxnmYdu1ZbRkAlxNxUAcPykhdIJ0UuQmFeQwYBmOhhu8dTaS51bt+SkxQMq9fm1UYcAGaHKKMceGD+agOgI7lPLBoByK/3PwnxGUptJQmZnk6TJ9a1kMbLzllXSneqRkLCv0SCa6SXa2/QIDAQAB;",
-                            "Selector2KeySize":  2048,
-                            "Selector2CNAME":  "selector2-associates-dhs-cisa-gov._domainkey.tqhjy.onmicrosoft.com",
-                            "Selector2PublicKey":  "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA05Me3QPcAtSW6CMtxZq7y89zmpvq8QY/4srelDXznTvo/wpMPLLsrsd+lDsbKjX8t7KE+AhNBByRBogbJe9UPAIC2qqAQRgW3cEO89Vt9IJbYxIfzvLEZCiJlo+ixw+K7WvsMlC2M7pwfgWB5YHTcDjkN6Ix8q4FDFNWjReCqJpuaAgeC+2dqprKYVF2XgDk17+4JxuPBQqje8T/9mixIxKEnBHF+LHXDYJaTYZBZbfEwbg7s7ArqqqBYxToPrkbUJbpsF7c/xS+S12uUtxw7sHR5jXU4V15yJT9ed61flsDKTG/nQlSOpyfYgtlfXUm7SfUD532PoIxnuWvv1TJEQIDAQAB;",
-                            "Enabled":  true,
-                            "IsDefault":  false,
-                            "HeaderCanonicalization":  "Relaxed",
-                            "BodyCanonicalization":  "Relaxed",
-                            "Algorithm":  "RsaSHA256",
-                            "NumberOfBytesToSign":  "All",
-                            "IncludeSignatureCreationTime":  true,
-                            "IncludeKeyExpiration":  false,
-                            "KeyCreationTime":  "Date(1651609815797)",
-                            "LastChecked":  "Date(1651609815797)",
-                            "RotateOnDate":  "Date(1651955415797)",
-                            "SelectorBeforeRotateOnDate":  "selector2",
-                            "SelectorAfterRotateOnDate":  "selector1",
-                            "Status":  "Valid",
-                            "Identity":  "associates.dhs.cisa.gov",
-                            "Id":  "associates.dhs.cisa.gov",
-                            "IsValid":  true,
-                            "ExchangeVersion":  "0.20 (15.0.0.0)",
-                            "Name":  "associates.dhs.cisa.gov",
-                            "DistinguishedName":  "CN=associates.dhs.cisa.gov,CN=Dkim Signing config,CN=Transport Settings,CN=Configuration,CN=tqhjy.onmicrosoft.com,CN=ConfigurationUnits,DC=NAMPR09A006,DC=PROD,DC=OUTLOOK,DC=COM",
-                            "ObjectCategory":  "NAMPR09A006.PROD.OUTLOOK.COM/Configuration/Schema/ms-Exch-Hosted-Content-Filter-Config",
-                            "ObjectClass":  [
-                                                "top",
-                                                "msExchHostedContentFilterConfig"
-                                            ],
-                            "WhenChanged":  "Date(1651609832000)",
-                            "WhenCreated":  "Date(1626471070000)",
-                            "WhenChangedUTC":  "Date(1651609832000)",
-                            "WhenCreatedUTC":  "Date(1626471070000)",
-                            "ExchangeObjectId":  "5c088a4c-3ef4-4413-8095-c8e15d2e9e48",
-                            "OrganizationalUnitRoot":  "tqhjy.onmicrosoft.com",
-                            "OrganizationId":  "NAMPR09A006.PROD.OUTLOOK.COM/Microsoft Exchange Hosted Organizations/tqhjy.onmicrosoft.com - NAMPR09A006.PROD.OUTLOOK.COM/ConfigurationUnits/tqhjy.onmicrosoft.com/Configuration",
-                            "Guid":  "5c088a4c-3ef4-4413-8095-c8e15d2e9e48",
-                            "OriginatingServer":  "DM5PR09A006DC09.NAMPR09A006.PROD.OUTLOOK.COM",
-                            "ObjectState":  "Unchanged"
-                        },
-                        {
-                            "Domain":  "test365.cisa.dhs.gov",
-                            "AdminDisplayName":  "",
-                            "Selector1KeySize":  2048,
-                            "Selector1CNAME":  "selector1-test365-cisa-dhs-gov._domainkey.tqhjy.onmicrosoft.com",
-                            "Selector1PublicKey":  "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5C8aVe0pDvH1I6/e4sC1IJhNu/OdO9TANT6YG5Q61XQrc4hSyJsW75f3qENcXZAMmsCUZhn7hYdtTv6tcpP/cebcFzmoEatBaVoVWl6R+Gy9/6uPjIrg8s/83le+KXK+TFgR5fighyMlwM937FS9Ii8HQVVzoFU08w6lfDjewLXCwBIk0Y5P0NjW510iaWxTMsnjZ/hrL/REnRRsYB2x8Ll/SHC9nltlGIP3IgcmGPS4DWSdNXTGu10Hz3zML9tRruU96K0TTWs2lRoQoNAn0eu2YLQ5RR8JaLiQ5EYn5lY3ZhDK/4FlAG52AdvkrdbQelwlJiZpBbTUjMk5PvtNUQIDAQAB;",
-                            "Selector2KeySize":  2048,
-                            "Selector2CNAME":  "selector2-test365-cisa-dhs-gov._domainkey.tqhjy.onmicrosoft.com",
-                            "Selector2PublicKey":  "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwVCM2ZRZbi+HfMpoGMmEuv+0x+Fc7++ObO11SXDvyrm5OhMGDzyR6lMJPRhovYu4y4WxgKvYtalHtORzIzbcs5+m07uee/bmz6vZJqsSc/52O0UJGHYpBAPWktBb5Trjaj4Hr26FkTIJCPxy4z8m4Wsx9/+jimn5cdb4zbQhnwccBii6wptEekvATQu6cX8vogy8NDFr6wcSxcM923EQSUout2OrUGmkJnQvrkKvCCj4Gjt8ZNoGGaLpd+vzKVbvyHaLOMbVreIWTm6fg5vM0DDmhVwIAfHUhoOlLOQ5GiGM4pK+z6MMzvAJE3bTLEvuoAji96GDSlLU+Kj+6rOWMQIDAQAB;",
-                            "Enabled":  true,
-                            "IsDefault":  false,
-                            "HeaderCanonicalization":  "Relaxed",
-                            "BodyCanonicalization":  "Relaxed",
-                            "Algorithm":  "RsaSHA256",
-                            "NumberOfBytesToSign":  "All",
-                            "IncludeSignatureCreationTime":  true,
-                            "IncludeKeyExpiration":  false,
-                            "KeyCreationTime":  "Date(1653603314013)",
-                            "LastChecked":  "Date(1653603314013)",
-                            "RotateOnDate":  "Date(1653948914013)",
-                            "SelectorBeforeRotateOnDate":  "selector1",
-                            "SelectorAfterRotateOnDate":  "selector2",
-                            "Status":  "Valid",
-                            "Identity":  "test365.cisa.dhs.gov",
-                            "Id":  "test365.cisa.dhs.gov",
-                            "IsValid":  true,
-                            "ExchangeVersion":  "0.20 (15.0.0.0)",
-                            "Name":  "test365.cisa.dhs.gov",
-                            "DistinguishedName":  "CN=test365.cisa.dhs.gov,CN=Dkim Signing config,CN=Transport Settings,CN=Configuration,CN=tqhjy.onmicrosoft.com,CN=ConfigurationUnits,DC=NAMPR09A006,DC=PROD,DC=OUTLOOK,DC=COM",
-                            "ObjectCategory":  "NAMPR09A006.PROD.OUTLOOK.COM/Configuration/Schema/ms-Exch-Hosted-Content-Filter-Config",
-                            "ObjectClass":  [
-                                                "top",
-                                                "msExchHostedContentFilterConfig"
-                                            ],
-                            "WhenChanged":  "Date(1653603334000)",
-                            "WhenCreated":  "Date(1651689371000)",
-                            "WhenChangedUTC":  "Date(1653603334000)",
-                            "WhenCreatedUTC":  "Date(1651689371000)",
-                            "ExchangeObjectId":  "e64ef9c1-9920-474d-aad3-b3d1b7cd606e",
-                            "OrganizationalUnitRoot":  "tqhjy.onmicrosoft.com",
-                            "OrganizationId":  "NAMPR09A006.PROD.OUTLOOK.COM/Microsoft Exchange Hosted Organizations/tqhjy.onmicrosoft.com - NAMPR09A006.PROD.OUTLOOK.COM/ConfigurationUnits/tqhjy.onmicrosoft.com/Configuration",
-                            "Guid":  "e64ef9c1-9920-474d-aad3-b3d1b7cd606e",
-                            "OriginatingServer":  "DM5PR09A006DC09.NAMPR09A006.PROD.OUTLOOK.COM",
-                            "ObjectState":  "Unchanged"
                         }
                     ],
     "dkim_records":  [
-                         {
-                             "domain":  "dhs.cisa.gov",
-                             "rdata":  [
-                                           "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwFSu1nMh65jJ8aErOaJVvpebHMom45tQKfNK6/nQUgCg9ne8qFE0DyA0SdqtT3r4/uOzhFVxEYFT6rxqcD54BWVQ1hhdEeNbOhHiOjn+W8rLbNnejVUbk5tpjF9yHBkqrpRuJJKTOQTl+6Myqx2IqYA1PTM9Md94iOZNmxKyFlYzLr8QITRXtyQjtOlBE+7lf",
-                                           "tsNTAQwnl34zfPZZPAhczn0UfeAYW4hcYO6BP0OHlcwyLOXRcHIdKZ6mNOog0wExCK98ryPQuNFqzDxSMOg3vjmrQiTJzDOgKBqZ3+/Zjvhfyh0iLxWIDxeUNBgbMEx5tCuyUuO2JI+vK/VeG1mGQIDAQAB;"
-                                       ],
-                             "log":  [
-                                         {
-                                             "query_method":  "traditional",
-                                             "query_result":  "Query returned 2 txt records",
-                                             "query_name":  "selector1._domainkey.dhs.cisa.gov"
-                                         }
-                                     ]
-                         },
                          {
                              "domain":  "tqhjy.onmicrosoft.com",
                              "rdata":  [
@@ -19468,25 +19293,6 @@
                                              "query_method":  "traditional",
                                              "query_result":  "Query returned 2 txt records",
                                              "query_name":  "selector1-tqhjy-onmicrosoft-com._domainkey.tqhjy.onmicrosoft.com"
-                                         }
-                                     ]
-                         },
-                         {
-                             "domain":  "test365.cisa.dhs.gov",
-                             "rdata":  [
-                                           "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwVCM2ZRZbi+HfMpoGMmEuv+0x+Fc7++ObO11SXDvyrm5OhMGDzyR6lMJPRhovYu4y4WxgKvYtalHtORzIzbcs5+m07uee/bmz6vZJqsSc/52O0UJGHYpBAPWktBb5Trjaj4Hr26FkTIJCPxy4z8m4Wsx9/+jimn5cdb4zbQhnwccBii6wptEekvATQu6cX8vo",
-                                           "gy8NDFr6wcSxcM923EQSUout2OrUGmkJnQvrkKvCCj4Gjt8ZNoGGaLpd+vzKVbvyHaLOMbVreIWTm6fg5vM0DDmhVwIAfHUhoOlLOQ5GiGM4pK+z6MMzvAJE3bTLEvuoAji96GDSlLU+Kj+6rOWMQIDAQAB;"
-                                       ],
-                             "log":  [
-                                         {
-                                             "query_method":  "traditional",
-                                             "query_result":  "Query returned NXDomain",
-                                             "query_name":  "selector1._domainkey.test365.cisa.dhs.gov"
-                                         },
-                                         {
-                                             "query_method":  "traditional",
-                                             "query_result":  "Query returned 2 txt records",
-                                             "query_name":  "selector2._domainkey.test365.cisa.dhs.gov"
                                          }
                                      ]
                          },
@@ -19521,19 +19327,6 @@
                      ],
     "dmarc_records":  [
                           {
-                              "domain":  "dhs.cisa.gov",
-                              "rdata":  [
-                                            "v=DMARC1; p=reject; sp=none;"
-                                        ],
-                              "log":  [
-                                          {
-                                              "query_method":  "traditional",
-                                              "query_result":  "Query returned 1 txt records",
-                                              "query_name":  "_dmarc.dhs.cisa.gov"
-                                          }
-                                      ]
-                          },
-                          {
                               "domain":  "tqhjy.onmicrosoft.com",
                               "rdata":  [
 
@@ -19548,24 +19341,6 @@
                                               "query_method":  "traditional",
                                               "query_result":  "Query returned NXDomain",
                                               "query_name":  "_dmarc.onmicrosoft.com"
-                                          }
-                                      ]
-                          },
-                          {
-                              "domain":  "test365.cisa.dhs.gov",
-                              "rdata":  [
-                                            "v=DMARC1; p=reject; pct=100; rua=mailto:DMARC@hq.dhs.gov,  mailto:reports@dmarc.cyber.dhs.gov"
-                                        ],
-                              "log":  [
-                                          {
-                                              "query_method":  "traditional",
-                                              "query_result":  "Query returned NXDomain",
-                                              "query_name":  "_dmarc.test365.cisa.dhs.gov"
-                                          },
-                                          {
-                                              "query_method":  "traditional",
-                                              "query_result":  "Query returned 1 txt records",
-                                              "query_name":  "_dmarc.dhs.gov"
                                           }
                                       ]
                           },
@@ -20750,9 +20525,7 @@
                                   "ServiceInstance":  "MicrosoftCommunicationsOnline/GOV-1B-G6",
                                   "ServiceNumberCount":  null,
                                   "SipDomain":  [
-                                                    "tqhjy.onmicrosoft.com",
-                                                    "dhs.cisa.gov",
-                                                    "test365.cisa.dhs.gov"
+                                                    "tqhjy.onmicrosoft.com"
                                                 ],
                                   "StateOrProvince":  null,
                                   "Street":  null,
