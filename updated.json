@@ -9535,7 +9535,7 @@
 
                                                                                                             ],
                                                                                          "Id":  "Fido2",
-                                                                                         "State":  null,
+                                                                                         "State":  "enabled",
                                                                                          "AdditionalProperties":  {
                                                                                                                       "@odata.type":  "#microsoft.graph.fido2AuthenticationMethodConfiguration",
                                                                                                                       "isSelfServiceRegistrationAllowed":  true,
@@ -9585,13 +9585,13 @@
 
                                                                                                             ],
                                                                                          "Id":  "MicrosoftAuthenticator",
-                                                                                         "State":  null,
+                                                                                         "State":  "enabled",
                                                                                          "AdditionalProperties":  {
                                                                                                                       "@odata.type":  "#microsoft.graph.microsoftAuthenticatorAuthenticationMethodConfiguration",
                                                                                                                       "isSoftwareOathEnabled":  false,
                                                                                                                       "featureSettings":  {
                                                                                                                                               "companionAppAllowedState":  {
-                                                                                                                                                                               "state":  null,
+                                                                                                                                                                               "state":  "default",
                                                                                                                                                                                "includeTarget":  {
                                                                                                                                                                                                      "targetType":  "group",
                                                                                                                                                                                                      "id":  "all_users"
@@ -9602,7 +9602,7 @@
                                                                                                                                                                                                  }
                                                                                                                                                                            },
                                                                                                                                               "numberMatchingRequiredState":  {
-                                                                                                                                                                                  "state":  null,
+                                                                                                                                                                                  "state":  "enabled",
                                                                                                                                                                                   "includeTarget":  {
                                                                                                                                                                                                         "targetType":  "group",
                                                                                                                                                                                                         "id":  "all_users"
@@ -9613,7 +9613,7 @@
                                                                                                                                                                                                     }
                                                                                                                                                                               },
                                                                                                                                               "displayAppInformationRequiredState":  {
-                                                                                                                                                                                         "state":  null,
+                                                                                                                                                                                         "state":  "enabled",
                                                                                                                                                                                          "includeTarget":  {
                                                                                                                                                                                                                "targetType":  "group",
                                                                                                                                                                                                                "id":  "all_users"
@@ -9624,7 +9624,7 @@
                                                                                                                                                                                                            }
                                                                                                                                                                                      },
                                                                                                                                               "displayLocationInformationRequiredState":  {
-                                                                                                                                                                                              "state":  null,
+                                                                                                                                                                                              "state":  "enabled",
                                                                                                                                                                                               "includeTarget":  {
                                                                                                                                                                                                                     "targetType":  "group",
                                                                                                                                                                                                                     "id":  "all_users"
@@ -9651,7 +9651,7 @@
 
                                                                                                             ],
                                                                                          "Id":  "Sms",
-                                                                                         "State":  null,
+                                                                                         "State":  "disabled",
                                                                                          "AdditionalProperties":  {
                                                                                                                       "@odata.type":  "#microsoft.graph.smsAuthenticationMethodConfiguration",
                                                                                                                       "includeTargets@odata.context":  "https://graph.microsoft.com/beta/$metadata#policies/authenticationMethodsPolicy/authenticationMethodConfigurations(\u0027Sms\u0027)/microsoft.graph.smsAuthenticationMethodConfiguration/includeTargets",
@@ -9670,7 +9670,7 @@
 
                                                                                                             ],
                                                                                          "Id":  "TemporaryAccessPass",
-                                                                                         "State":  null,
+                                                                                         "State":  "enabled",
                                                                                          "AdditionalProperties":  {
                                                                                                                       "@odata.type":  "#microsoft.graph.temporaryAccessPassAuthenticationMethodConfiguration",
                                                                                                                       "defaultLifetimeInMinutes":  60,
@@ -9693,7 +9693,7 @@
 
                                                                                                             ],
                                                                                          "Id":  "HardwareOath",
-                                                                                         "State":  null,
+                                                                                         "State":  "disabled",
                                                                                          "AdditionalProperties":  {
                                                                                                                       "@odata.type":  "#microsoft.graph.hardwareOathAuthenticationMethodConfiguration",
                                                                                                                       "includeTargets@odata.context":  "https://graph.microsoft.com/beta/$metadata#policies/authenticationMethodsPolicy/authenticationMethodConfigurations(\u0027HardwareOath\u0027)/microsoft.graph.hardwareOathAuthenticationMethodConfiguration/includeTargets",
@@ -9711,7 +9711,7 @@
 
                                                                                                             ],
                                                                                          "Id":  "SoftwareOath",
-                                                                                         "State":  null,
+                                                                                         "State":  "disabled",
                                                                                          "AdditionalProperties":  {
                                                                                                                       "@odata.type":  "#microsoft.graph.softwareOathAuthenticationMethodConfiguration",
                                                                                                                       "includeTargets@odata.context":  "https://graph.microsoft.com/beta/$metadata#policies/authenticationMethodsPolicy/authenticationMethodConfigurations(\u0027SoftwareOath\u0027)/microsoft.graph.softwareOathAuthenticationMethodConfiguration/includeTargets",
@@ -9729,7 +9729,7 @@
 
                                                                                                             ],
                                                                                          "Id":  "Voice",
-                                                                                         "State":  null,
+                                                                                         "State":  "disabled",
                                                                                          "AdditionalProperties":  {
                                                                                                                       "@odata.type":  "#microsoft.graph.voiceAuthenticationMethodConfiguration",
                                                                                                                       "isOfficePhoneAllowed":  false,
@@ -9749,7 +9749,7 @@
 
                                                                                                             ],
                                                                                          "Id":  "Email",
-                                                                                         "State":  null,
+                                                                                         "State":  "disabled",
                                                                                          "AdditionalProperties":  {
                                                                                                                       "@odata.type":  "#microsoft.graph.emailAuthenticationMethodConfiguration",
                                                                                                                       "allowExternalIdToUseEmailOtp":  "disabled",
@@ -9764,7 +9764,7 @@
 
                                                                                                             ],
                                                                                          "Id":  "X509Certificate",
-                                                                                         "State":  null,
+                                                                                         "State":  "enabled",
                                                                                          "AdditionalProperties":  {
                                                                                                                       "@odata.type":  "#microsoft.graph.x509CertificateAuthenticationMethodConfiguration",
                                                                                                                       "certificateUserBindings":  [
@@ -9789,10 +9789,10 @@
                                                                                                                                                                         ]
                                                                                                                                                           },
                                                                                                                       "issuerHintsConfiguration":  {
-                                                                                                                                                       "state":  null
+                                                                                                                                                       "state":  "disabled"
                                                                                                                                                    },
                                                                                                                       "crlValidationConfiguration":  {
-                                                                                                                                                         "state":  null,
+                                                                                                                                                         "state":  "disabled",
                                                                                                                                                          "exemptedCertificateAuthoritiesSubjectKeyIdentifiers":  [
 
                                                                                                                                                                                                                  ]
@@ -9850,7 +9850,7 @@
                                                                                                                                                                                     }
                                                                                                                                                                                 ],
                                                                                                                                                              "SnoozeDurationInDays":  1,
-                                                                                                                                                             "State":  null
+                                                                                                                                                             "State":  "disabled"
                                                                                                                                                          }
                                                                                                        },
                                                                            "ReportSuspiciousActivitySettings":  {
@@ -9858,7 +9858,7 @@
                                                                                                                                           "Id":  "all_users",
                                                                                                                                           "TargetType":  "group"
                                                                                                                                       },
-                                                                                                                    "State":  null,
+                                                                                                                    "State":  "default",
                                                                                                                     "VoiceReportingCode":  0
                                                                                                                 },
                                                                            "SystemCredentialPreferences":  {
@@ -9871,7 +9871,7 @@
                                                                                                                                           "TargetType":  "group"
                                                                                                                                       }
                                                                                                                                   ],
-                                                                                                               "State":  null
+                                                                                                               "State":  "default"
                                                                                                            },
                                                                            "AdditionalProperties":  {
                                                                                                         "@odata.context":  "https://graph.microsoft.com/beta/$metadata#authenticationMethodsPolicy",
@@ -9881,34 +9881,6 @@
                                   }
                               ],
     "domain_settings":  [
-                            {
-                                "AuthenticationType":  "Managed",
-                                "AvailabilityStatus":  null,
-                                "DomainNameReferences":  null,
-                                "FederationConfiguration":  null,
-                                "Id":  "tedtest.hoorah.com",
-                                "IsAdminManaged":  true,
-                                "IsDefault":  false,
-                                "IsInitial":  false,
-                                "IsRoot":  false,
-                                "IsVerified":  false,
-                                "PasswordNotificationWindowInDays":  null,
-                                "PasswordValidityPeriodInDays":  null,
-                                "ServiceConfigurationRecords":  null,
-                                "SharedEmailDomainInvitations":  null,
-                                "State":  {
-                                              "LastActionDateTime":  null,
-                                              "Operation":  null,
-                                              "Status":  null
-                                          },
-                                "SupportedServices":  [
-
-                                                      ],
-                                "VerificationDnsRecords":  null,
-                                "AdditionalProperties":  {
-
-                                                         }
-                            },
                             {
                                 "AuthenticationType":  "Managed",
                                 "AvailabilityStatus":  null,
@@ -9943,35 +9915,6 @@
                                 "AvailabilityStatus":  null,
                                 "DomainNameReferences":  null,
                                 "FederationConfiguration":  null,
-                                "Id":  "dhs.cisa.gov",
-                                "IsAdminManaged":  true,
-                                "IsDefault":  false,
-                                "IsInitial":  false,
-                                "IsRoot":  true,
-                                "IsVerified":  true,
-                                "PasswordNotificationWindowInDays":  14,
-                                "PasswordValidityPeriodInDays":  2147483647,
-                                "ServiceConfigurationRecords":  null,
-                                "SharedEmailDomainInvitations":  null,
-                                "State":  {
-                                              "LastActionDateTime":  null,
-                                              "Operation":  null,
-                                              "Status":  null
-                                          },
-                                "SupportedServices":  [
-                                                          "Email",
-                                                          "Intune"
-                                                      ],
-                                "VerificationDnsRecords":  null,
-                                "AdditionalProperties":  {
-
-                                                         }
-                            },
-                            {
-                                "AuthenticationType":  "Managed",
-                                "AvailabilityStatus":  null,
-                                "DomainNameReferences":  null,
-                                "FederationConfiguration":  null,
                                 "Id":  "tqhjy.onmicrosoft.com",
                                 "IsAdminManaged":  true,
                                 "IsDefault":  false,
@@ -9989,34 +9932,6 @@
                                           },
                                 "SupportedServices":  [
 
-                                                      ],
-                                "VerificationDnsRecords":  null,
-                                "AdditionalProperties":  {
-
-                                                         }
-                            },
-                            {
-                                "AuthenticationType":  "Managed",
-                                "AvailabilityStatus":  null,
-                                "DomainNameReferences":  null,
-                                "FederationConfiguration":  null,
-                                "Id":  "test365.cisa.dhs.gov",
-                                "IsAdminManaged":  true,
-                                "IsDefault":  false,
-                                "IsInitial":  false,
-                                "IsRoot":  true,
-                                "IsVerified":  true,
-                                "PasswordNotificationWindowInDays":  14,
-                                "PasswordValidityPeriodInDays":  2147483647,
-                                "ServiceConfigurationRecords":  null,
-                                "SharedEmailDomainInvitations":  null,
-                                "State":  {
-                                              "LastActionDateTime":  null,
-                                              "Operation":  null,
-                                              "Status":  null
-                                          },
-                                "SupportedServices":  [
-                                                          "Email"
                                                       ],
                                 "VerificationDnsRecords":  null,
                                 "AdditionalProperties":  {
@@ -10068,7 +9983,7 @@
                                         "HostedContentFilterPolicy":  "Strict Preset Security Policy1681329956650",
                                         "AntiPhishPolicy":  "Strict Preset Security Policy1681329955447",
                                         "MalwareFilterPolicy":  "Strict Preset Security Policy1681329957931",
-                                        "State":  null,
+                                        "State":  "Enabled",
                                         "Priority":  0,
                                         "Comments":  null,
                                         "Description":  "If the message:\r\n\tIs sent to \u0027AlexW@y2zj1.onmicrosoft.com\u0027\r\n\tand Is sent to a member of group \u0027mofuntonight@tqhjy.onmicrosoft.com\u0027\r\n\tand recipients\u0027s address domain portion belongs to any of these domains: \u0027badpeople.r.us\u0027\r\nTake the following actions:\r\n\tApply hosted content filter policy \"Strict Preset Security Policy1681329956650\"., Apply AntiPhish policy \"Strict Preset Security Policy1681329955447\"., Apply malware filter policy \"Strict Preset Security Policy1681329957931\".\r\n",
@@ -10113,7 +10028,7 @@
                                         "HostedContentFilterPolicy":  "Standard Preset Security Policy1659535432883",
                                         "AntiPhishPolicy":  "Standard Preset Security Policy1659535429826",
                                         "MalwareFilterPolicy":  "Standard Preset Security Policy1659535435292",
-                                        "State":  null,
+                                        "State":  "Enabled",
                                         "Priority":  1,
                                         "Comments":  null,
                                         "Description":  "Take the following actions:\r\n\tApply hosted content filter policy \"Standard Preset Security Policy1659535432883\"., Apply AntiPhish policy \"Standard Preset Security Policy1659535429826\"., Apply malware filter policy \"Standard Preset Security Policy1659535435292\".\r\n",
@@ -10149,7 +10064,7 @@
                              {
                                  "SafeAttachmentPolicy":  "Strict Preset Security Policy1681329958553",
                                  "SafeLinksPolicy":  "Strict Preset Security Policy1681329959203",
-                                 "State":  null,
+                                 "State":  "Enabled",
                                  "Priority":  0,
                                  "Comments":  null,
                                  "Description":  "If the message:\r\n\tIs sent to \u0027AlexW@y2zj1.onmicrosoft.com\u0027\r\n\tand Is sent to a member of group \u0027mofuntonight@tqhjy.onmicrosoft.com\u0027\r\n\tand recipients\u0027s address domain portion belongs to any of these domains: \u0027badpeople.r.us\u0027\r\nTake the following actions:\r\n\tApply safe attachment policy \"Strict Preset Security Policy1681329958553\"., Apply safe links policy \"Strict Preset Security Policy1681329959203\".\r\n",
@@ -10193,7 +10108,7 @@
                              {
                                  "SafeAttachmentPolicy":  "Standard Preset Security Policy1659535436109",
                                  "SafeLinksPolicy":  "Standard Preset Security Policy1659535436756",
-                                 "State":  null,
+                                 "State":  "Disabled",
                                  "Priority":  1,
                                  "Comments":  null,
                                  "Description":  "Take the following actions:\r\n\tApply safe attachment policy \"Standard Preset Security Policy1659535436109\"., Apply safe links policy \"Standard Preset Security Policy1659535436756\".\r\n",
@@ -19861,7 +19776,7 @@
                                "Actions":  [
                                                "Microsoft.Exchange.MessagingPolicies.Rules.Tasks.PrependSubjectAction"
                                            ],
-                               "State":  null,
+                               "State":  "Enabled",
                                "Mode":  "Enforce",
                                "IsRuleConfigurationSupported":  true,
                                "RuleConfigurationUnsupportedReason":  "",
@@ -20071,7 +19986,7 @@
                                "Actions":  [
                                                "Microsoft.Exchange.MessagingPolicies.Rules.Tasks.PrependSubjectAction"
                                            ],
-                               "State":  null,
+                               "State":  "Enabled",
                                "Mode":  "Enforce",
                                "IsRuleConfigurationSupported":  true,
                                "RuleConfigurationUnsupportedReason":  "",
@@ -20839,7 +20754,7 @@
                                                     "dhs.cisa.gov",
                                                     "test365.cisa.dhs.gov"
                                                 ],
-                                  "StateOrProvince":  "DC",
+                                  "StateOrProvince":  null,
                                   "Street":  null,
                                   "SubscriberNumberCount":  null,
                                   "SyncInLyncAdInfo":  {
