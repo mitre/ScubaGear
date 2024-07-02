@@ -128,7 +128,10 @@ function Publish-ScubaGearModule {
   )
 
   Write-Output "> Publishing ScubaGear module..."
-
+  Write-Output "> URL is $AzureKeyVaultUrl" # Delete me
+  Write-Output "> Cert is $CertificateName" # Delete me
+  Write-Output "> Gallery is $GalleryName"  # Delete me
+  Write-Output "> NuGet is $NuGetApiKey"    # Delete me
   ###################
   # Build-ScubaModule
   ###################
@@ -151,7 +154,7 @@ function Publish-ScubaGearModule {
   #   -ModulePath $ModuleBuildPath `
   #   -OverrideModuleVersion $OverrideModuleVersion `
   #   -PrereleaseTag $PrereleaseTag
-  
+
   Write-Warning ">>> Configuring ScubaGear module..."
   # Verify that the module build path folder exists
   if (Test-Path -Path $ModuleBuildPath) {
