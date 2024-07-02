@@ -596,7 +596,3 @@ function CallAzureSignTool {
     Write-Error ">>> Failed to sign filelist without errors."
   }
 }
-
-Export-ModuleMember -Function @(
-  'Publish-ScubaGearModule'
-)
