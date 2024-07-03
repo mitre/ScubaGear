@@ -377,7 +377,7 @@ function New-FileList {
     $ArrayOfFilePaths
  )
   $FileListPath = New-TemporaryFile
-  $ArrayOfFilePaths.FullName | Out-File -FilePath $($FileList.FullName) -Encoding utf8 -Force
+  $ArrayOfFilePaths.FullName | Out-File -FilePath $($FileListPath.FullName) -Encoding utf8 -Force
   $FileListFileName = $FileListPath.FullName
 
   # Verify that the file exists
