@@ -129,92 +129,12 @@ function Publish-ScubaGearModule {
 
   Write-Output "Publishing ScubaGear module..."
 
-  #####
   # Copy the module to a temp location
-  #####
-
   $ModuleDestinationPath = Copy-ModuleToTempLocation -ModuleSourcePath $ModuleSourcePath -ModuleTempPath $env:TEMP
 
-  ##########################
-  # ConfigureScubaGearModule
-  ##########################
-  # $ConfiguredCorrectly = ConfigureScubaGearModule `
-  #   -ModulePath $ModuleDestinationPath `
-  #   -OverrideModuleVersion $OverrideModuleVersion `
-  #   -PrereleaseTag $PrereleaseTag
+  # Edit the manifest file
+  Edit-TheManifestFile -ModuleDestinationPath $ModuleDestinationPath -OverrideModuleVersion $OverrideModuleVersion
 
-  Write-Warning "Configuring ScubaGear module..."
-
-  $ManifestPath = Join-Path -Path $ModuleDestinationPath -ChildPath "ScubaGear.psd1"
-
-  # Verify that the manifest file exists
-  if (Test-Path -Path $ManifestPath) {
-    Write-Warning ">>> The manifest file exists at $ManifestPath"
-  }
-  else {
-    Write-Error ">>> Failed to find the manifest file at $ManifestPath"
-  }
-
-  $ModuleVersion = $OverrideModuleVersion
-
-  if ([string]::IsNullOrEmpty($OverrideModuleVersion)) {
-    $CurrentModuleVersion = (Import-PowerShellDataFile $ManifestPath).ModuleVersion
-    $TimeStamp = [int32](Get-Date -UFormat %s)
-    $ModuleVersion = "$CurrentModuleVersion.$TimeStamp"
-  }
-
-  Write-Warning ">>> The prerelease tag is $PrereleaseTag"
-  Write-Warning ">>> The module version is $ModuleVersion"
-
-  $ProjectUri = "https://github.com/cisagov/ScubaGear"
-  $LicenseUri = "https://github.com/cisagov/ScubaGear/blob/main/LICENSE"
-  # Tags cannot contain spaces
-  $Tags = 'CISA', 'O365', 'M365', 'AzureAD', 'Configuration', 'Exchange', 'Report', 'Security', 'SharePoint', 'Defender', 'Teams', 'PowerPlatform', 'OneDrive'
-
-  $ManifestUpdates = @{
-    Path          = $ManifestPath
-    ModuleVersion = $ModuleVersion
-    ProjectUri    = $ProjectUri
-    LicenseUri    = $LicenseUri
-    Tags          = $Tags
-  }
-  if (-Not [string]::IsNullOrEmpty($PrereleaseTag)) {
-    $ManifestUpdates.Add('Prerelease', $PrereleaseTag)
-  }
-
-  try {
-    $CurrentErrorActionPreference = $ErrorActionPreference
-    $ErrorActionPreference = "SilentlyContinue"
-    Update-ModuleManifest @ManifestUpdates
-    $ErrorActionPreference = $CurrentErrorActionPreference
-  }
-  catch {
-    Write-Warning ">>> Error: Cannot update module manifest:"
-    # Write-Warning ">>> Stacktrace:"
-    # Write-Warning $_.ScriptStackTrace
-    Write-Warning ">>> Exception:"
-    Write-Warning $_.Exception
-    Write-Error ">>> Failed to update the module manifest."
-  }
-  try {
-    $CurrentErrorActionPreference = $ErrorActionPreference
-    $ErrorActionPreference = "SilentlyContinue"
-    Test-ModuleManifest -Path $ManifestPath
-    $ErrorActionPreference = $CurrentErrorActionPreference
-  }
-  catch {
-    Write-Warning ">>> Warning: Cannot test module manifest:"
-    # Write-Warning ">>> Stacktrace:"
-    # Write-Warning $_.ScriptStackTrace
-    Write-Warning ">>> Exception:"
-    Write-Warning $_.Exception
-    Write-Error ">>> Failed to test module manifest."
-  }
-
-  # End ConfigureScubaGearModule
-  # End Build-ScubaModule
-
-  # If the module is not signed, the SignScubaGearModule will throw an error
   #####################
   # SignScubaGearModule
   #####################
@@ -339,9 +259,6 @@ function Copy-ModuleToTempLocation {
     $ModuleTempPath
  )
 
-  Write-Warning "The module source path is of type"
-  Write-Warning $ModuleSourcePath.GetType()
-
   $Leaf = Split-Path -Path $ModuleSourcePath -Leaf
   $ModuleDestinationPath = Join-Path -Path $ModuleTempPath -ChildPath $Leaf
 
@@ -369,7 +286,93 @@ function Copy-ModuleToTempLocation {
   return $ModuleDestinationPath
 }
 
+function Edit-TheManifestFile {
+  <#
+    .DESCRIPTION
+      Updates the manifest file in the module with info that PSGallery needs
+      Throws an error if the manifest file cannot be found or updated.
+      No return.
+  #>
+  param (
+    [Parameter(Mandatory = $true)]
+    [string]
+    $ModuleDestinationPath,
+    [Parameter(Mandatory = $false)]
+    [string]
+    $OverrideModuleVersion,
+    [Parameter(Mandatory = $true)]
+    [string]
+    $PrereleaseTag
+ )
+  Write-Warning "Editing the manifest file..."
 
+  $ManifestFilePath = Join-Path -Path $ModuleDestinationPath -ChildPath "ScubaGear.psd1"
+
+  Write-Warning "The manifest file path is $ManifestFilePath"
+  
+  # Verify that the manifest file exists
+  if (Test-Path -Path $ManifestFilePath) {
+    Write-Warning "The manifest file exists."
+  }
+  else {
+    Write-Error "Failed to find the manifest file."
+  }
+
+  # The module needs some version
+  if ([string]::IsNullOrEmpty($OverrideModuleVersion)) {
+    # If the override module version is missing, make up some version
+    $CurrentModuleVersion = (Import-PowerShellDataFile $ManifestFilePath).ModuleVersion
+    $TimeStamp = [int32](Get-Date -UFormat %s)
+    $ModuleVersion = "$CurrentModuleVersion.$TimeStamp"
+  }
+  else {
+    # Use what the user supplied
+    $ModuleVersion = $OverrideModuleVersion
+  }
+
+  Write-Warning "The module version is $ModuleVersion"
+  Write-Warning "The prerelease tag is $PrereleaseTag" # Can be empty
+  
+  $ProjectUri = "https://github.com/cisagov/ScubaGear"
+  $LicenseUri = "https://github.com/cisagov/ScubaGear/blob/main/LICENSE"
+  # Tags cannot contain spaces
+  $Tags = 'CISA', 'O365', 'M365', 'AzureAD', 'Configuration', 'Exchange', 'Report', 'Security', 'SharePoint', 'Defender', 'Teams', 'PowerPlatform', 'OneDrive'
+
+  # Configure the update parameters for the manifest file
+  $ManifestUpdates = @{
+    Path          = $ManifestFilePath
+    ModuleVersion = $ModuleVersion
+    ProjectUri    = $ProjectUri
+    LicenseUri    = $LicenseUri
+    Tags          = $Tags
+  }
+  if (-Not [string]::IsNullOrEmpty($PrereleaseTag)) {
+    $ManifestUpdates.Add('Prerelease', $PrereleaseTag)
+  }
+
+  try {
+    $CurrentErrorActionPreference = $ErrorActionPreference
+    $ErrorActionPreference = "SilentlyContinue"
+    Update-ModuleManifest @ManifestUpdates
+    $ErrorActionPreference = $CurrentErrorActionPreference
+  }
+  catch {
+    Write-Warning "Error: Cannot edit the module because:"
+    Write-Warning $_.Exception
+    Write-Error "Failed to edit the module manifest."
+  }
+  try {
+    $CurrentErrorActionPreference = $ErrorActionPreference
+    $ErrorActionPreference = "SilentlyContinue"
+    Test-ModuleManifest -Path $ManifestFilePath
+    $ErrorActionPreference = $CurrentErrorActionPreference
+  }
+  catch {
+    Write-Warning "Error: Cannot test the manifest file because:"
+    Write-Warning $_.Exception
+    Write-Error "Failed to test the manifest file."
+  }
+}
 
 function CallAzureSignTool {
   <#
