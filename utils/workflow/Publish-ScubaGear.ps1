@@ -128,12 +128,13 @@ function Publish-ScubaGearModule {
   )
 
   Write-Output "Publishing ScubaGear module..."
-  
+
   #####
   # Copy the module to a temp location
   #####
 
-  Write-Output
+  Write-Warning "The module source path is of type"
+  Write-Warning $ModuleSourcePath.GetType()
   $ModuleDestinationPath = Copy-ModuleToTempLocation($ModuleSourcePath, $env:TEMP)
 
   ##########################
@@ -275,7 +276,7 @@ function Publish-ScubaGearModule {
     -CertificateName $CertificateName `
     -FileList $FileListFileName
     # -TimeStampServer $TimeStampServer `
-    
+
   # Create and sign catalog
   $CatalogFileName = 'ScubaGear.cat'
   $CatalogFilePath = Join-Path -Path $ModuleDestinationPath -ChildPath $CatalogFileName
@@ -309,7 +310,7 @@ function Publish-ScubaGearModule {
   else {
     Write-Error ">> Signing the module was NOT successful."
   }
-  
+
   $Parameters = @{
     Path       = $ModuleDestinationPath
     Repository = $GalleryName
@@ -346,16 +347,16 @@ function Copy-ModuleToTempLocation {
 
   $Leaf = Split-Path -Path $ModuleSourcePath -Leaf
   $ModuleDestinationPath = Join-Path -Path $ModuleTempPath -ChildPath $Leaf
-  
+
   Write-Warning "The module source path is $ModuleSourcePath"
   Write-Warning "The temp path is $ModuleTempPath"
   Write-Warning "The module destination path is $ModuleDestinationPath"
-    
+
   # Remove the destination if it already exists
   if (Test-Path -Path $ModuleDestinationPath -PathType Container) {
     Remove-Item -Recurse -Force $ModuleDestinationPath
   }
-  
+
   Write-Warning "Copying the module from source to dest..."
 
   Copy-Item $ModuleSourcePath -Destination $ModuleDestinationPath -Recurse
