@@ -128,10 +128,10 @@ function Publish-ScubaGearModule {
   )
 
   Write-Output "> Publishing ScubaGear module..."
-  Write-Output "> URL is $AzureKeyVaultUrl" # Delete me
-  Write-Output "> Cert is $CertificateName" # Delete me
-  Write-Output "> Gallery is $GalleryName"  # Delete me
-  Write-Output "> NuGet is $NuGetApiKey"    # Delete me
+  # Write-Output "> URL is $AzureKeyVaultUrl" # Delete me
+  # Write-Output "> Cert is $CertificateName" # Delete me
+  # Write-Output "> Gallery is $GalleryName"  # Delete me
+  # Write-Output "> NuGet is $NuGetApiKey"    # Delete me
   
   ###################
   # Build-ScubaModule
@@ -343,278 +343,6 @@ function Publish-ScubaGearModule {
 
 }
 
-# function Build-ScubaModule {
-#     <#
-#         .NOTES
-#             Internal helper function
-#     #>
-#     [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost', '')]
-#     param (
-#         [Parameter(Mandatory = $true)]
-#         [ValidateScript({ Test-Path -Path $_ -PathType Container })]
-#         [string]
-#         $ModulePath,
-#         [Parameter(Mandatory = $false)]
-#         [AllowEmptyString()]
-#         [string]
-#         $OverrideModuleVersion = "",
-#         [Parameter(Mandatory = $false)]
-#         [AllowEmptyString()]
-#         [string]
-#         $PrereleaseTag = ""
-#     )
-#     Write-Warning ">> Building ScubaGear module..."
-
-#     $Leaf = Split-Path -Path $ModulePath -Leaf
-#     $ModuleBuildPath = Join-Path -Path $env:TEMP -ChildPath $Leaf
-
-#     if (Test-Path -Path $ModuleBuildPath -PathType Container) {
-#         Remove-Item -Recurse -Force $ModuleBuildPath
-#     }
-
-#     Copy-Item $ModulePath -Destination $env:TEMP -Recurse
-#     $ConfiguredCorrectly = ConfigureScubaGearModule `
-#                             -ModulePath $ModuleBuildPath `
-#                             -OverrideModuleVersion $OverrideModuleVersion `
-#                             -PrereleaseTag $PrereleaseTag
-#     if (-not $ConfiguredCorrectly) {
-#         Write-Error ">> Failed to build ScubaGear module."
-#     }
-
-#     return $ModuleBuildPath
-# }
-
-# function ConfigureScubaGearModule {
-#   <#
-#         .NOTES
-#             This function updates the manifest file.
-#     #>
-#   [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost', '')]
-#   param (
-#     [Parameter(Mandatory = $true)]
-#     [ValidateScript({ Test-Path -Path $_ -PathType Container })]
-#     $ModulePath,
-#     [Parameter(Mandatory = $false)]
-#     [AllowEmptyString()]
-#     [string]
-#     $OverrideModuleVersion = "",
-#     [Parameter(Mandatory = $false)]
-#     [AllowEmptyString()]
-#     [string]
-#     $PrereleaseTag = ""
-#   )
-#   Write-Warning ">>> Configuring ScubaGear module..."
-
-#   #TODO: Add any module configuration needed (e.g., adjust Module Version)
-#   # Verify that the module path folder exists
-#   if (Test-Path -Path $ModulePath) {
-#     Write-Warning ">>> The module dir exists at $ModulePath"
-#   }
-#   else {
-#     Write-Error ">>> Failed to find the module directory at $ModulePat."
-#   }
-
-#   $ManifestPath = Join-Path -Path $ModulePath -ChildPath "ScubaGear.psd1"
-
-#   # Verify that the manifest file exists
-#   if (Test-Path -Path $ManifestPath) {
-#     Write-Warning ">>> The manifest file exists at $ManifestPath"
-#   }
-#   else {
-#     Write-Error ">>> Failed to find the manifest file at $ManifestPath"
-#   }
-
-#   $ModuleVersion = $OverrideModuleVersion
-
-#   if ([string]::IsNullOrEmpty($OverrideModuleVersion)) {
-#     $CurrentModuleVersion = (Import-PowerShellDataFile $ManifestPath).ModuleVersion
-#     $TimeStamp = [int32](Get-Date -UFormat %s)
-#     $ModuleVersion = "$CurrentModuleVersion.$TimeStamp"
-#   }
-
-#   Write-Warning ">>> The prerelease tag is $PrereleaseTag"
-#   Write-Warning ">>> The module version is $ModuleVersion"
-
-#   $ProjectUri = "https://github.com/cisagov/ScubaGear"
-#   $LicenseUri = "https://github.com/cisagov/ScubaGear/blob/main/LICENSE"
-#   # Tags cannot contain spaces
-#   $Tags = 'CISA', 'O365', 'M365', 'AzureAD', 'Configuration', 'Exchange', 'Report', 'Security', 'SharePoint', 'Defender', 'Teams', 'PowerPlatform', 'OneDrive'
-
-#   $ManifestUpdates = @{
-#     Path          = $ManifestPath
-#     ModuleVersion = $ModuleVersion
-#     ProjectUri    = $ProjectUri
-#     LicenseUri    = $LicenseUri
-#     Tags          = $Tags
-#   }
-#   if (-Not [string]::IsNullOrEmpty($PrereleaseTag)) {
-#     $ManifestUpdates.Add('Prerelease', $PrereleaseTag)
-#   }
-
-#   try {
-#     $CurrentErrorActionPreference = $ErrorActionPreference
-#     $ErrorActionPreference = "SilentlyContinue"
-#     Update-ModuleManifest @ManifestUpdates
-#     $ErrorActionPreference = $CurrentErrorActionPreference
-#   }
-#   catch {
-#     Write-Warning ">>> Error: Cannot update module manifest:"
-#     # Write-Warning ">>> Stacktrace:"
-#     # Write-Warning $_.ScriptStackTrace
-#     Write-Warning ">>> Exception:"
-#     Write-Warning $_.Exception
-#     # Write-Error ">>> Failed to update the module manifest."
-#     return $False
-#   }
-#   try {
-#     $CurrentErrorActionPreference = $ErrorActionPreference
-#     $ErrorActionPreference = "SilentlyContinue"
-#     Test-ModuleManifest -Path $ManifestPath
-#     $ErrorActionPreference = $CurrentErrorActionPreference
-#   }
-#   catch {
-#     Write-Warning ">>> Warning: Cannot test module manifest:"
-#     # Write-Warning ">>> Stacktrace:"
-#     # Write-Warning $_.ScriptStackTrace
-#     Write-Warning ">>> Exception:"
-#     Write-Warning $_.Exception
-#     Write-Error ">>> Failed to test module manifest."
-#   }
-
-#   # True indicates that the updating and testing were successful.
-#   return $True
-# }
-
-# function SignScubaGearModule {
-#   <#
-#         .SYNOPSIS
-#             Code sign the specified module
-#         .Description
-#             This function individually signs PowerShell artifacts (i.e., *.ps1, *.pms1) and creates a signed catalog of the entire module using a certificate housed in an Azure key vault.
-#         .Parameter AzureKeyVaultUrl
-#             The URL of the key vault with the code signing certificate
-#         .Parameter CertificateName
-#             The name of the code signing certificate
-#         .Parameter ModulePath
-#             The root path of the module to be signed
-#         .Parameter TimeStampServer
-#             Time server to use to timestamp the artifacts
-#         .NOTES
-#             There appears to be limited or at least difficult to find documentation on how to properly sign a PowerShell module to be published to PSGallery. This page shows general guidance:
-#             https://learn.microsoft.com/en-us/powershell/gallery/concepts/publishing-guidelines?view=powershellget-3.x
-#             There is anecdotal evidence to sign all PowerShell artifacts (ps1, psm1, and pdsd1) in additional to a signed catalog. For example, Microsoft.PowerApps.PowerShell (v1.0.34) and see both *.psd1 and *.psm1 files are signed and a catalog provided. There are a number of non-authoritive references such as below showing all ps1, psm1, and psd1 being signed first then cataloged:
-#             https://github.com/dell/OpenManage-PowerShell-Modules/blob/main/Sign-Module.ps1
-#     #>
-#   param (
-#     [Parameter(Mandatory = $true)]
-#     [ValidateScript({ [uri]::IsWellFormedUriString($_, 'Absolute') -and ([uri] $_).Scheme -in 'https' })]
-#     [System.Uri]
-#     $AzureKeyVaultUrl,
-#     [Parameter(Mandatory = $true)]
-#     [ValidateNotNullOrEmpty()]
-#     [string]
-#     $CertificateName,
-#     [Parameter(Mandatory = $true)]
-#     [ValidateScript({ Test-Path -Path $_ -PathType Container })]
-#     $ModulePath,
-#     [Parameter(Mandatory = $false)]
-#     [ValidateScript({ [uri]::IsWellFormedUriString($_, 'Absolute') -and ([uri] $_).Scheme -in 'http', 'https' })]
-#     $TimeStampServer = 'http://timestamp.digicert.com'
-#   )
-
-#   Write-Warning ">> Signing ScubaGear module..."
-
-#   # Sign scripts, manifest, and modules
-#   $ArrayOfFilePaths = CreateArrayOfFilePaths `
-#     -SourcePath $ModulePath `
-#     -Extensions "*.ps1", "*.psm1", "*.psd1"  # Array of extensions
-#   if ($ArrayOfFilePaths.Length -eq 0) {
-#     Write-Error "Failed to find any .ps1, .psm1, or .psd files."
-#   }
-#   $FileList = CreateFileList $ArrayOfFilePaths # String
-#   Write-Warning ">> The file list is $FileList"
-#   Write-Warning ">> Calling CallAzureSignTool function to sign scripts, manifest, and modules..."
-#   CallAzureSignTool `
-#     -AzureKeyVaultUrl $AzureKeyVaultUrl `
-#     -CertificateName $CertificateName `
-#     -TimeStampServer $TimeStampServer `
-#     -FileList $FileList
-
-#   # Create and sign catalog
-#   $CatalogFileName = 'ScubaGear.cat'
-#   $CatalogFilePath = Join-Path -Path $ModulePath -ChildPath $CatalogFileName
-
-#   if (Test-Path -Path $CatalogFilePath -PathType Leaf) {
-#     Remove-Item -Path $CatalogFilePath -Force
-#   }
-
-#   # New-FileCatlog creates a Windows catalog file (.cat) containing cryptographic hashes
-#   # for files and folders in the specified paths.
-#   $CatalogFilePath = New-FileCatalog -Path $ModulePath -CatalogFilePath $CatalogFilePath -CatalogVersion 2.0
-#   Write-Warning ">> The catalog path is $CatalogFilePath"
-#   $CatalogList = New-TemporaryFile
-#   $CatalogFilePath.FullName | Out-File -FilePath $CatalogList -Encoding utf8 -Force
-
-#   Write-Warning ">> Calling CallAzureSignTool function to sign catalog list..."
-#   CallAzureSignTool `
-#     -AzureKeyVaultUrl $AzureKeyVaultUrl `
-#     -CertificateName $CertificateName `
-#     -TimeStampServer $TimeStampServer `
-#     -FileList $CatalogList
-
-#   # Test-FileCatalog validates whether the hashes contained in a catalog file (.cat) matches
-#   # the hashes of the actual files in order to validate their authenticity.
-#   Write-Warning ">> Testing the catalog"
-#   $TestResult = Test-FileCatalog -CatalogFilePath $CatalogFilePath -Path $ModulePath
-#   Write-Warning ">> Test result is $TestResult"
-#   if ('Valid' -eq $TestResult) {
-#     Write-Warning ">> Signing the module was successful."
-#     return $true
-#   }
-#   else {
-#     Write-Error ">> Signing the module was NOT successful."
-#   }
-# }
-
-# function CreateArrayOfFilePaths {
-#   param(
-#     [Parameter(Mandatory = $true)]
-#     [ValidateNotNullOrEmpty()]
-#     [string]
-#     $SourcePath,
-#     [Parameter(Mandatory = $false)]
-#     [AllowEmptyCollection()]
-#     [array]
-#     $Extensions = @()
-#   )
-#   Write-Warning ">>> Create array of file paths..."
-#   $ArrayOfFilePaths = @()
-#   if ($Extensions.Count -gt 0) {
-#     $FilePath = Get-ChildItem -Recurse -Path $SourcePath -Include $Extensions
-#     $ArrayOfFilePaths += $FilePath
-#   }
-#   # ForEach ($FilePath in $ArrayOfFilePaths) {
-#   #     Write-Debug ">>> File path is $FilePath"
-#   # }
-#   return $ArrayOfFilePaths
-# }
-
-# function CreateFileList {
-#   <#
-#         .NOTES
-#             Creates a temp file with a list of filenames
-#     #>
-#   param([Parameter(Mandatory = $true)][array]$FileNames)
-#   if ($FileNames -eq $null) {
-#     Write-Error "FileNames is null"
-#   }
-#   Write-Warning ">>> Creating file list..."
-#   Write-Warning ">>> Found $($FileNames.Count) files to sign"
-#   $FileList = New-TemporaryFile
-#   $FileNames.FullName | Out-File -FilePath $($FileList.FullName) -Encoding utf8 -Force
-#   return $FileList.FullName
-# }
-
 function CallAzureSignTool {
   <#
     .NOTES
@@ -661,16 +389,18 @@ function CallAzureSignTool {
   $ToolPath = (Get-Command AzureSignTool).Path
   Write-Warning ">>> The path to AzureSignTool is $ToolPath"
   $Results = & $ToolPath $SignArguments
+  # Write-Warning ">>> Results"
+  # Write-Warning $Results
+
+  # Test the results for failures.
   # If there are no failures, this string will be the last line in the results.
   # Warning: This is a brittle test, because it depends upon a specific string.
   # A unit test should be used to detect changes.
   $FoundNoFailures = $Results | Select-String -Pattern 'Failed operations: 0' -Quiet
-  # Write-Warning ">>> Results"
-  # Write-Warning $Results
   if ($FoundNoFailures -eq $true) {
     Write-Warning ">>> Found no failures."
   }
   else {
-    Write-Error ">>> Failed to sign filelist without errors."
+    Write-Error ">>> Failed to sign the filelist without errors."
   }
 }
