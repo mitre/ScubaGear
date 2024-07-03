@@ -305,7 +305,7 @@ function Edit-TheManifestFile {
     [Parameter(Mandatory = $false)]
     [string]
     $OverrideModuleVersion,
-    [Parameter(Mandatory = $true)]
+    [Parameter(Mandatory = $true)][AllowEmptyString()]
     [string]
     $PrereleaseTag
  )
