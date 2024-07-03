@@ -373,7 +373,7 @@ function New-FileList {
   #>
   param (
     [Parameter(Mandatory = $true)]
-    [string]
+    [array]
     $ArrayOfFilePaths
  )
   $FileListPath = New-TemporaryFile
