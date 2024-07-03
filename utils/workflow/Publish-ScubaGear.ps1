@@ -291,9 +291,9 @@ function Publish-ScubaGearModule {
   CallAzureSignTool `
     -AzureKeyVaultUrl $AzureKeyVaultUrl `
     -CertificateName $CertificateName `
-    # -TimeStampServer $TimeStampServer `
     -FileList $FileListFileName
-
+    # -TimeStampServer $TimeStampServer `
+    
   # Create and sign catalog
   $CatalogFileName = 'ScubaGear.cat'
   $CatalogFilePath = Join-Path -Path $ModuleBuildPath -ChildPath $CatalogFileName
