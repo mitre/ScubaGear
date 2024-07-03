@@ -127,61 +127,27 @@ function Publish-ScubaGearModule {
     $NuGetApiKey
   )
 
-  Write-Output "Publishing ScubaGear module..."
-
-  # Copy the module to a temp location
+  Write-Output "Copying the module to a temp location..."
   $ModuleDestinationPath = Copy-ModuleToTempLocation `
    -ModuleSourcePath $ModuleSourcePath `
    -ModuleTempPath $env:TEMP
 
-  # Edit the manifest file
+  Write-Output "Editing the manifest file..."
   Edit-TheManifestFile `
    -ModuleDestinationPath $ModuleDestinationPath `
    -OverrideModuleVersion $OverrideModuleVersion `
    -PrereleaseTag $PrereleaseTag
 
-  #####################
-  # SignScubaGearModule
-  #####################
-  # $SuccessfullySigned = SignScubaGearModule `
-  #   -AzureKeyVaultUrl $AzureKeyVaultUrl `
-  #   -CertificateName $CertificateName `
-  #   -ModulePath $ModuleDestinationPath
-
-  Write-Warning ">> Signing ScubaGear module..."
-
-  # Sign scripts, manifest, and modules
-  ########################
-  # CreateArrayOfFilePaths
-  ########################
-  # $ArrayOfFilePaths = CreateArrayOfFilePaths `
-  #   -SourcePath $ModuleSourcePath `
-  #   -Extensions "*.ps1", "*.psm1", "*.psd1"  # Array of extensions
-
-  $Extensions = "*.ps1", "*.psm1", "*.psd1"  # Array of extensions
-  Write-Warning ">>> Creating array of file paths..."
-  $ArrayOfFilePaths = @()
-  if ($Extensions.Count -gt 0) {
-    $FilePath = Get-ChildItem -Recurse -Path $ModuleDestinationPath -Include $Extensions
-    $ArrayOfFilePaths += $FilePath
-  }
-  # Write-Warning ">>> Verifying array of file paths..."
-  # ForEach ($FilePath in $ArrayOfFilePaths) {
-  #     Write-Warning ">>> File path is $FilePath"
-  # }
-
-  # End CreateArrayOfFilePaths
-
-  if ($ArrayOfFilePaths.Length -eq 0) {
-    Write-Error "Failed to find any .ps1, .psm1, or .psd files."
-  }
+  Write-Output "Creating an array of the files to sign..."
+  New-ArrayOfFilePaths `
+   -ModuleDestinationPath $ModuleDestinationPath
+  
   ################
   # CreateFileList
   ################
 
   # $FileList = CreateFileList $ArrayOfFilePaths # String
   Write-Warning ">>> Creating file list..."
-  Write-Warning ">>> Found $($ArrayOfFilePaths.Count) files to sign"
   $FileList = New-TemporaryFile
   $ArrayOfFilePaths.FullName | Out-File -FilePath $($FileList.FullName) -Encoding utf8 -Force
   $FileListFileName = $FileList.FullName
@@ -191,6 +157,7 @@ function Publish-ScubaGearModule {
   ###################
   # CallAzureSignTool
   ###################
+
 
   Write-Warning ">> Calling CallAzureSignTool function to sign scripts, manifest, and modules..."
   CallAzureSignTool `
@@ -224,7 +191,7 @@ function Publish-ScubaGearModule {
   # Test-FileCatalog validates whether the hashes contained in a catalog file (.cat) matches
   # the hashes of the actual files in order to validate their authenticity.
   Write-Warning ">> Testing the catalog"
-  $TestResult = Test-FileCatalog -Path $ModuleDestinationPath -CatalogFilePath $CatalogFilePath 
+  $TestResult = Test-FileCatalog -Path $ModuleDestinationPath -CatalogFilePath $CatalogFilePath
   Write-Warning ">> Test result is $TestResult"
   if ('Valid' -eq $TestResult) {
     Write-Warning ">> Signing the module was successful."
@@ -309,12 +276,11 @@ function Edit-TheManifestFile {
     [string]
     $PrereleaseTag
  )
-  Write-Warning "Editing the manifest file..."
 
   $ManifestFilePath = Join-Path -Path $ModuleDestinationPath -ChildPath "ScubaGear.psd1"
 
   Write-Warning "The manifest file path is $ManifestFilePath"
-  
+
   # Verify that the manifest file exists
   if (Test-Path -Path $ManifestFilePath) {
     Write-Warning "The manifest file exists."
@@ -337,7 +303,7 @@ function Edit-TheManifestFile {
 
   Write-Warning "The module version is $ModuleVersion"
   Write-Warning "The prerelease tag is $PrereleaseTag" # Can be empty
-  
+
   $ProjectUri = "https://github.com/cisagov/ScubaGear"
   $LicenseUri = "https://github.com/cisagov/ScubaGear/blob/main/LICENSE"
   # Tags cannot contain spaces
@@ -377,6 +343,41 @@ function Edit-TheManifestFile {
     Write-Warning $_.Exception
     Write-Error "Failed to test the manifest file."
   }
+}
+
+function New-ArrayOfFilePaths {
+  <#
+    .DESCRIPTION
+      Creates an array of the files to sign
+      Throws an error if no matching files can be found.
+      Returns the array.
+  #>
+  param (
+    [Parameter(Mandatory = $true)]
+    [string]
+    $ModuleDestinationPath
+ )
+
+  $FileExtensions = "*.ps1", "*.psm1", "*.psd1"  # Array of extensions to match on
+  
+  $ArrayOfFilePaths = @()
+  $ArrayOfFilePaths = Get-ChildItem -Recurse -Path $ModuleDestinationPath -Include $FileExtensions
+  # $MatchingFiles = Get-ChildItem -Recurse -Path $ModuleDestinationPath -Include $FileExtensions
+  # $ArrayOfFilePaths += $MatchingFiles
+  
+  Write-Warning "Verifying array of file paths..."
+  ForEach ($FilePath in $ArrayOfFilePaths) {
+      Write-Warning ">>> File path is $FilePath"
+  }
+
+  if ($ArrayOfFilePaths.Length -gt 0) {
+    Write-Warning ">>> Found $($ArrayOfFilePaths.Count) files to sign"
+  }
+  else {
+    Write-Error "Failed to find any .ps1, .psm1, or .psd files."    
+  }
+
+  return $ArrayOfFilePaths
 }
 
 function CallAzureSignTool {
