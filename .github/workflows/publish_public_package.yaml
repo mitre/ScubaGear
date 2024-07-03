@@ -82,7 +82,7 @@ jobs:
           $Parameters = @{
             AzureKeyVaultUrl = '${{ steps.key-vault-info.outputs.KeyVaultUrl }}'
             CertificateName = '${{ steps.key-vault-info.outputs.KeyVaultCertificateName }}'
-            ModulePath = 'repo/PowerShell/ScubaGear'
+            ModuleSourcePath = 'repo/PowerShell/ScubaGear'
             GalleryName = 'PSGallery'
             NuGetApiKey = $ApiKey
           }
