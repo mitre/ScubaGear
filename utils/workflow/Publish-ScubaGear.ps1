@@ -254,15 +254,16 @@ function Publish-ScubaGearModule {
   #   -Extensions "*.ps1", "*.psm1", "*.psd1"  # Array of extensions
 
   $Extensions = "*.ps1", "*.psm1", "*.psd1"  # Array of extensions
-  Write-Warning ">>> Create array of file paths..."
+  Write-Warning ">>> Creating array of file paths..."
   $ArrayOfFilePaths = @()
   if ($Extensions.Count -gt 0) {
     $FilePath = Get-ChildItem -Recurse -Path $ModuleBuildPath -Include $Extensions
     $ArrayOfFilePaths += $FilePath
   }
-  # ForEach ($FilePath in $ArrayOfFilePaths) {
-  #     Write-Debug ">>> File path is $FilePath"
-  # }
+  Write-Warning ">>> Verifying array of file paths..."
+  ForEach ($FilePath in $ArrayOfFilePaths) {
+      Write-Debug ">>> File path is $FilePath"
+  }
   # return $ArrayOfFilePaths
 
   # End CreateArrayOfFilePaths
