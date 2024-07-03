@@ -133,6 +133,7 @@ function Publish-ScubaGearModule {
   # Copy the module to a temp location
   #####
 
+  Write-Output
   $ModuleDestinationPath = Copy-ModuleToTempLocation($ModuleSourcePath, $env:TEMP)
 
   ##########################
@@ -337,31 +338,34 @@ function Copy-ModuleToTempLocation {
     $ModuleSourcePath,
     [Parameter(Mandatory = $true)]
     [string]
-    $ModuleDestinationRootPath
+    $ModuleTempPath
   )
 
+  Write-Warning "The module source path is of type"
+  Write-Warning $ModuleSourcePath.GetType()
+
   $Leaf = Split-Path -Path $ModuleSourcePath -Leaf
-  $ModuleDestinationPath = Join-Path -Path $env:TEMP -ChildPath $Leaf
+  $ModuleDestinationPath = Join-Path -Path $ModuleTempPath -ChildPath $Leaf
   
-  Write-Output " The module source path is $ModuleSourcePath"
-  Write-Output " The module destination path is $ModuleDestinationPath"
-  Write-Output " The module destination root is $env:TEMP"
-  
+  Write-Warning "The module source path is $ModuleSourcePath"
+  Write-Warning "The temp path is $ModuleTempPath"
+  Write-Warning "The module destination path is $ModuleDestinationPath"
+    
   # Remove the destination if it already exists
   if (Test-Path -Path $ModuleDestinationPath -PathType Container) {
     Remove-Item -Recurse -Force $ModuleDestinationPath
   }
   
-  Write-Output " Copying the module from source to dest..."
+  Write-Warning "Copying the module from source to dest..."
 
-  Copy-Item $ModuleSourcePath -Destination $env:TEMP -Recurse
+  Copy-Item $ModuleSourcePath -Destination $ModuleDestinationPath -Recurse
 
   # Verify that the destination exists
   if (Test-Path -Path $ModuleDestinationPath) {
-    Write-Warning " The module desintination path exists."
+    Write-Warning "The module desintination path exists."
   }
   else {
-    Write-Error " Failed to find the module desintination path."
+    Write-Error "Failed to find the module desintination path."
   }
 
   return $ModuleDestinationPath
