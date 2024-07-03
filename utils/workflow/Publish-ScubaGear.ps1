@@ -142,29 +142,15 @@ function Publish-ScubaGearModule {
   $ArrayOfFilePaths = New-ArrayOfFilePaths `
    -ModuleDestinationPath $ModuleDestinationPath
   
-  ################
-  # CreateFileList
-  ################
+  Write-Output "Creating a file with a list of the files to sign..."
+  $FileListFileName = New-FileList `
+   -ArrayOfFilePaths $ArrayOfFilePaths
 
-  # $FileList = CreateFileList $ArrayOfFilePaths # String
-  Write-Warning ">>> Creating file list..."
-  $FileList = New-TemporaryFile
-  $ArrayOfFilePaths.FullName | Out-File -FilePath $($FileList.FullName) -Encoding utf8 -Force
-  $FileListFileName = $FileList.FullName
-
-  Write-Warning ">> The file list is $FileListFileName"
-
-  ###################
-  # CallAzureSignTool
-  ###################
-
-
-  Write-Warning ">> Calling CallAzureSignTool function to sign scripts, manifest, and modules..."
+  Write-Warning "Calling AzureSignTool function to sign scripts, manifest, and modules..."
   CallAzureSignTool `
     -AzureKeyVaultUrl $AzureKeyVaultUrl `
     -CertificateName $CertificateName `
     -FileList $FileListFileName
-    # -TimeStampServer $TimeStampServer `
 
   # Create and sign catalog
   $CatalogFileName = 'ScubaGear.cat'
@@ -362,22 +348,47 @@ function New-ArrayOfFilePaths {
   
   $ArrayOfFilePaths = @()
   $ArrayOfFilePaths = Get-ChildItem -Recurse -Path $ModuleDestinationPath -Include $FileExtensions
-  # $MatchingFiles = Get-ChildItem -Recurse -Path $ModuleDestinationPath -Include $FileExtensions
-  # $ArrayOfFilePaths += $MatchingFiles
   
-  Write-Warning "Verifying array of file paths..."
-  ForEach ($FilePath in $ArrayOfFilePaths) {
-      Write-Warning ">>> File path is $FilePath"
-  }
+  # Write-Warning "Verifying array of file paths..."
+  # ForEach ($FilePath in $ArrayOfFilePaths) {
+  #     Write-Warning ">>> File path is $FilePath"
+  # }
 
   if ($ArrayOfFilePaths.Length -gt 0) {
-    Write-Warning ">>> Found $($ArrayOfFilePaths.Count) files to sign"
+    Write-Warning "Found $($ArrayOfFilePaths.Count) files to sign"
   }
   else {
     Write-Error "Failed to find any .ps1, .psm1, or .psd files."    
   }
 
   return $ArrayOfFilePaths
+}
+
+function New-FileList {
+  <#
+    .DESCRIPTION
+      Creates a file that contains a list of all the files to sign
+      Throws an error if the file is not created.
+      Returns the name of the file.
+  #>
+  param (
+    [Parameter(Mandatory = $true)]
+    [string]
+    $ArrayOfFilePaths
+ )
+  $FileListPath = New-TemporaryFile
+  $ArrayOfFilePaths.FullName | Out-File -FilePath $($FileList.FullName) -Encoding utf8 -Force
+  $FileListFileName = $FileListPath.FullName
+
+  # Verify that the file exists
+  if (Test-Path -Path $FileListPath) {
+    Write-Warning "The list file exists."
+  }
+  else {
+    Write-Error "Failed to find the list file."
+  }
+
+  return $FileListFileName
 }
 
 function CallAzureSignTool {
