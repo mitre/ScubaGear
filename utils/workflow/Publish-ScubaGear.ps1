@@ -323,30 +323,24 @@ function Publish-ScubaGearModule {
   Write-Warning ">> Test result is $TestResult"
   if ('Valid' -eq $TestResult) {
     Write-Warning ">> Signing the module was successful."
-    return $true
   }
   else {
     Write-Error ">> Signing the module was NOT successful."
   }
   
-  # if ($SuccessfullySigned) {
-  #   Write-Output "> Successfully signed"
-  #   $Parameters = @{
-  #     Path       = $ModuleBuildPath
-  #     Repository = $GalleryName
-  #   }
-  #   if ($GalleryName -eq 'PSGallery') {
-  #     $Parameters.Add('NuGetApiKey', $NuGetApiKey)
-  #   }
+  $Parameters = @{
+    Path       = $ModuleBuildPath
+    Repository = $GalleryName
+  }
+  if ($GalleryName -eq 'PSGallery') {
+    $Parameters.Add('NuGetApiKey', $NuGetApiKey)
+  }
 
-  #   Write-Output "> The ScubaGear module will be published."
-  #   # The -Force parameter is only required if the new version is less than or equal to
-  #   # the current version, which is typically only true when testing.
-  #   Publish-Module @Parameters -Force
-  # }
-  # else {
-  #   Write-Error "> Failed to publish the module."
-  # }
+  # Write-Output "> The ScubaGear module will be published."
+  # The -Force parameter is only required if the new version is less than or equal to
+  # the current version, which is typically only true when testing.
+  Publish-Module @Parameters -Force
+
 }
 
 # function Build-ScubaModule {
