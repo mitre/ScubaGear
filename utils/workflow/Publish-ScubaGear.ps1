@@ -292,11 +292,11 @@ function Publish-ScubaGearModule {
     -AzureKeyVaultUrl $AzureKeyVaultUrl `
     -CertificateName $CertificateName `
     # -TimeStampServer $TimeStampServer `
-    -FileList $FileList
+    -FileList $FileListFileName
 
   # Create and sign catalog
   $CatalogFileName = 'ScubaGear.cat'
-  $CatalogFilePath = Join-Path -Path $ModulePath -ChildPath $CatalogFileName
+  $CatalogFilePath = Join-Path -Path $ModuleBuildPath -ChildPath $CatalogFileName
 
   if (Test-Path -Path $CatalogFilePath -PathType Leaf) {
     Remove-Item -Path $CatalogFilePath -Force
@@ -304,7 +304,7 @@ function Publish-ScubaGearModule {
 
   # New-FileCatlog creates a Windows catalog file (.cat) containing cryptographic hashes
   # for files and folders in the specified paths.
-  $CatalogFilePath = New-FileCatalog -Path $ModulePath -CatalogFilePath $CatalogFilePath -CatalogVersion 2.0
+  $CatalogFilePath = New-FileCatalog -Path $ModuleBuildPath -CatalogFilePath $CatalogFilePath -CatalogVersion 2.0
   Write-Warning ">> The catalog path is $CatalogFilePath"
   $CatalogList = New-TemporaryFile
   $CatalogFilePath.FullName | Out-File -FilePath $CatalogList -Encoding utf8 -Force
