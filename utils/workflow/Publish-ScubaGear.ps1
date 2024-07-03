@@ -262,7 +262,7 @@ function Publish-ScubaGearModule {
   }
   Write-Warning ">>> Verifying array of file paths..."
   ForEach ($FilePath in $ArrayOfFilePaths) {
-      Write-Debug ">>> File path is $FilePath"
+      Write-Warning ">>> File path is $FilePath"
   }
   # return $ArrayOfFilePaths
 
