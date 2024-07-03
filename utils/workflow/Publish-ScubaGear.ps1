@@ -282,27 +282,32 @@ function Publish-ScubaGearModule {
   $FileListFileName = $FileList.FullName
 
   Write-Warning ">> The file list is $FileListFileName"
-  # Write-Warning ">> Calling CallAzureSignTool function to sign scripts, manifest, and modules..."
-  # CallAzureSignTool `
-  #   -AzureKeyVaultUrl $AzureKeyVaultUrl `
-  #   -CertificateName $CertificateName `
-  #   -TimeStampServer $TimeStampServer `
-  #   -FileList $FileList
 
-  # # Create and sign catalog
-  # $CatalogFileName = 'ScubaGear.cat'
-  # $CatalogFilePath = Join-Path -Path $ModulePath -ChildPath $CatalogFileName
+  ###################
+  # CallAzureSignTool
+  ###################
 
-  # if (Test-Path -Path $CatalogFilePath -PathType Leaf) {
-  #   Remove-Item -Path $CatalogFilePath -Force
-  # }
+  Write-Warning ">> Calling CallAzureSignTool function to sign scripts, manifest, and modules..."
+  CallAzureSignTool `
+    -AzureKeyVaultUrl $AzureKeyVaultUrl `
+    -CertificateName $CertificateName `
+    -TimeStampServer $TimeStampServer `
+    -FileList $FileList
 
-  # # New-FileCatlog creates a Windows catalog file (.cat) containing cryptographic hashes
-  # # for files and folders in the specified paths.
-  # $CatalogFilePath = New-FileCatalog -Path $ModulePath -CatalogFilePath $CatalogFilePath -CatalogVersion 2.0
-  # Write-Warning ">> The catalog path is $CatalogFilePath"
-  # $CatalogList = New-TemporaryFile
-  # $CatalogFilePath.FullName | Out-File -FilePath $CatalogList -Encoding utf8 -Force
+  # Create and sign catalog
+  $CatalogFileName = 'ScubaGear.cat'
+  $CatalogFilePath = Join-Path -Path $ModulePath -ChildPath $CatalogFileName
+
+  if (Test-Path -Path $CatalogFilePath -PathType Leaf) {
+    Remove-Item -Path $CatalogFilePath -Force
+  }
+
+  # New-FileCatlog creates a Windows catalog file (.cat) containing cryptographic hashes
+  # for files and folders in the specified paths.
+  $CatalogFilePath = New-FileCatalog -Path $ModulePath -CatalogFilePath $CatalogFilePath -CatalogVersion 2.0
+  Write-Warning ">> The catalog path is $CatalogFilePath"
+  $CatalogList = New-TemporaryFile
+  $CatalogFilePath.FullName | Out-File -FilePath $CatalogList -Encoding utf8 -Force
 
   # Write-Warning ">> Calling CallAzureSignTool function to sign catalog list..."
   # CallAzureSignTool `
@@ -618,11 +623,11 @@ function Publish-ScubaGearModule {
 
 function CallAzureSignTool {
   <#
-        .NOTES
-            Internal function
-            AzureSignTool is a utility for signing code that is used to secure ScubaGear.
-            https://github.com/vcsjones/AzureSignTool
-    #>
+    .NOTES
+      Internal function
+      AzureSignTool is a utility for signing code that is used to secure ScubaGear.
+      https://github.com/vcsjones/AzureSignTool
+  #>
   param (
     [Parameter(Mandatory = $true)]
     [ValidateScript({ [uri]::IsWellFormedUriString($_, 'Absolute') -and ([uri] $_).Scheme -in 'https' })]
@@ -666,8 +671,8 @@ function CallAzureSignTool {
   # Warning: This is a brittle test, because it depends upon a specific string.
   # A unit test should be used to detect changes.
   $FoundNoFailures = $Results | Select-String -Pattern 'Failed operations: 0' -Quiet
-  # Write-Debug ">>> Results"
-  # Write-Debug $Results
+  # Write-Warning ">>> Results"
+  # Write-Warning $Results
   if ($FoundNoFailures -eq $true) {
     Write-Warning ">>> Found no failures."
   }
