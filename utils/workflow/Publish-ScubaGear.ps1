@@ -139,7 +139,7 @@ function Publish-ScubaGearModule {
    -PrereleaseTag $PrereleaseTag
 
   Write-Output "Creating an array of the files to sign..."
-  New-ArrayOfFilePaths `
+  $ArrayOfFilePaths = New-ArrayOfFilePaths `
    -ModuleDestinationPath $ModuleDestinationPath
   
   ################
