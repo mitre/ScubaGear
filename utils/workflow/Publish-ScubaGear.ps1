@@ -108,7 +108,7 @@ function Publish-ScubaGearModule {
     [Parameter(Mandatory = $true)]
     [ValidateScript({ Test-Path -Path $_ -PathType Container })]
     [string]
-    $ModulePath,
+    $ModuleSourcePath,
     [Parameter(Mandatory = $false)]
     [ValidateNotNullOrEmpty()]
     [string]
@@ -127,51 +127,26 @@ function Publish-ScubaGearModule {
     $NuGetApiKey
   )
 
-  Write-Output "> Publishing ScubaGear module..."
-  # Write-Output "> URL is $AzureKeyVaultUrl" # Delete me
-  # Write-Output "> Cert is $CertificateName" # Delete me
-  # Write-Output "> Gallery is $GalleryName"  # Delete me
-  # Write-Output "> NuGet is $NuGetApiKey"    # Delete me
+  Write-Output "Publishing ScubaGear module..."
   
-  ###################
-  # Build-ScubaModule
-  ###################
+  #####
+  # Copy the module to a temp location
+  #####
 
-  Write-Output "Building ScubaGear module..."
-  
-  $Leaf = Split-Path -Path $ModulePath -Leaf
-  $ModuleBuildPath = Join-Path -Path $env:TEMP -ChildPath $Leaf
-
-
-  if (Test-Path -Path $ModuleBuildPath -PathType Container) {
-    Remove-Item -Recurse -Force $ModuleBuildPath
-  }
-
-  Write-Output " The module path is $ModulePath"
-  Write-Output " The module build path is $ModuleBuildPath"
-  Write-Output " The temp destination is $env:TEMP"
-
-  Write-Output "Copying the module to the temp destination..."
-  Copy-Item $ModulePath -Destination $env:TEMP -Recurse
+  $ModuleDestinationPath = Copy-ModuleToTempLocation($ModuleSourcePath, $env:TEMP)
 
   ##########################
   # ConfigureScubaGearModule
   ##########################
   # $ConfiguredCorrectly = ConfigureScubaGearModule `
-  #   -ModulePath $ModuleBuildPath `
+  #   -ModulePath $ModuleDestinationPath `
   #   -OverrideModuleVersion $OverrideModuleVersion `
   #   -PrereleaseTag $PrereleaseTag
 
-  Write-Warning ">>> Configuring ScubaGear module..."
-  # Verify that the module build path folder exists
-  if (Test-Path -Path $ModuleBuildPath) {
-    Write-Warning ">>> The module dir exists at $ModuleBuildPath"
-  }
-  else {
-    Write-Error ">>> Failed to find the module directory at $ModuleBuildPath."
-  }
+  Write-Warning "Configuring ScubaGear module..."
+  
 
-  $ManifestPath = Join-Path -Path $ModuleBuildPath -ChildPath "ScubaGear.psd1"
+  $ManifestPath = Join-Path -Path $ModuleDestinationPath -ChildPath "ScubaGear.psd1"
 
   # Verify that the manifest file exists
   if (Test-Path -Path $ManifestPath) {
@@ -247,7 +222,7 @@ function Publish-ScubaGearModule {
   # $SuccessfullySigned = SignScubaGearModule `
   #   -AzureKeyVaultUrl $AzureKeyVaultUrl `
   #   -CertificateName $CertificateName `
-  #   -ModulePath $ModuleBuildPath
+  #   -ModulePath $ModuleDestinationPath
 
   Write-Warning ">> Signing ScubaGear module..."
 
@@ -256,14 +231,14 @@ function Publish-ScubaGearModule {
   # CreateArrayOfFilePaths
   ########################
   # $ArrayOfFilePaths = CreateArrayOfFilePaths `
-  #   -SourcePath $ModulePath `
+  #   -SourcePath $ModuleSourcePath `
   #   -Extensions "*.ps1", "*.psm1", "*.psd1"  # Array of extensions
 
   $Extensions = "*.ps1", "*.psm1", "*.psd1"  # Array of extensions
   Write-Warning ">>> Creating array of file paths..."
   $ArrayOfFilePaths = @()
   if ($Extensions.Count -gt 0) {
-    $FilePath = Get-ChildItem -Recurse -Path $ModuleBuildPath -Include $Extensions
+    $FilePath = Get-ChildItem -Recurse -Path $ModuleDestinationPath -Include $Extensions
     $ArrayOfFilePaths += $FilePath
   }
   # Write-Warning ">>> Verifying array of file paths..."
@@ -302,7 +277,7 @@ function Publish-ScubaGearModule {
     
   # Create and sign catalog
   $CatalogFileName = 'ScubaGear.cat'
-  $CatalogFilePath = Join-Path -Path $ModuleBuildPath -ChildPath $CatalogFileName
+  $CatalogFilePath = Join-Path -Path $ModuleDestinationPath -ChildPath $CatalogFileName
 
   if (Test-Path -Path $CatalogFilePath -PathType Leaf) {
     Remove-Item -Path $CatalogFilePath -Force
@@ -310,7 +285,7 @@ function Publish-ScubaGearModule {
 
   # New-FileCatlog creates a Windows catalog file (.cat) containing cryptographic hashes
   # for files and folders in the specified paths.
-  $CatalogFilePath = New-FileCatalog -Path $ModuleBuildPath -CatalogFilePath $CatalogFilePath -CatalogVersion 2.0
+  $CatalogFilePath = New-FileCatalog -Path $ModuleDestinationPath -CatalogFilePath $CatalogFilePath -CatalogVersion 2.0
   Write-Warning ">> The catalog path is $CatalogFilePath"
   $CatalogList = New-TemporaryFile
   $CatalogFilePath.FullName | Out-File -FilePath $CatalogList -Encoding utf8 -Force
@@ -325,7 +300,7 @@ function Publish-ScubaGearModule {
   # Test-FileCatalog validates whether the hashes contained in a catalog file (.cat) matches
   # the hashes of the actual files in order to validate their authenticity.
   Write-Warning ">> Testing the catalog"
-  $TestResult = Test-FileCatalog -Path $ModuleBuildPath -CatalogFilePath $CatalogFilePath 
+  $TestResult = Test-FileCatalog -Path $ModuleDestinationPath -CatalogFilePath $CatalogFilePath 
   Write-Warning ">> Test result is $TestResult"
   if ('Valid' -eq $TestResult) {
     Write-Warning ">> Signing the module was successful."
@@ -335,7 +310,7 @@ function Publish-ScubaGearModule {
   }
   
   $Parameters = @{
-    Path       = $ModuleBuildPath
+    Path       = $ModuleDestinationPath
     Repository = $GalleryName
   }
   if ($GalleryName -eq 'PSGallery') {
@@ -348,6 +323,51 @@ function Publish-ScubaGearModule {
   Publish-Module @Parameters -Force
 
 }
+
+function Copy-ModuleToTempLocation {
+  <#
+    .DESCRIPTION
+      Copies the module source path to a temp location, keeping the name of the leaf folder the same.
+      Throws an error if the copy fails.
+      Returns the module destination path.
+  #>
+  param (
+    [Parameter(Mandatory = $true)]
+    [string]
+    $ModuleSourcePath,
+    [Parameter(Mandatory = $true)]
+    [string]
+    $ModuleDestinationRootPath
+  )
+
+  $Leaf = Split-Path -Path $ModuleSourcePath -Leaf
+  $ModuleDestinationPath = Join-Path -Path $env:TEMP -ChildPath $Leaf
+  
+  Write-Output " The module source path is $ModuleSourcePath"
+  Write-Output " The module destination path is $ModuleDestinationPath"
+  Write-Output " The module destination root is $env:TEMP"
+  
+  # Remove the destination if it already exists
+  if (Test-Path -Path $ModuleDestinationPath -PathType Container) {
+    Remove-Item -Recurse -Force $ModuleDestinationPath
+  }
+  
+  Write-Output " Copying the module from source to dest..."
+
+  Copy-Item $ModuleSourcePath -Destination $env:TEMP -Recurse
+
+  # Verify that the destination exists
+  if (Test-Path -Path $ModuleDestinationPath) {
+    Write-Warning " The module desintination path exists."
+  }
+  else {
+    Write-Error " Failed to find the module desintination path."
+  }
+
+  return $ModuleDestinationPath
+}
+
+
 
 function CallAzureSignTool {
   <#
