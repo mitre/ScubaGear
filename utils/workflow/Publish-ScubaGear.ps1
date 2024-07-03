@@ -309,25 +309,25 @@ function Publish-ScubaGearModule {
   $CatalogList = New-TemporaryFile
   $CatalogFilePath.FullName | Out-File -FilePath $CatalogList -Encoding utf8 -Force
 
-  # Write-Warning ">> Calling CallAzureSignTool function to sign catalog list..."
-  # CallAzureSignTool `
-  #   -AzureKeyVaultUrl $AzureKeyVaultUrl `
-  #   -CertificateName $CertificateName `
-  #   -TimeStampServer $TimeStampServer `
-  #   -FileList $CatalogList
+  Write-Warning ">> Calling CallAzureSignTool function to sign catalog list..."
+  CallAzureSignTool `
+    -AzureKeyVaultUrl $AzureKeyVaultUrl `
+    -CertificateName $CertificateName `
+    -FileList $CatalogList
+    # -TimeStampServer $TimeStampServer `
 
-  # # Test-FileCatalog validates whether the hashes contained in a catalog file (.cat) matches
-  # # the hashes of the actual files in order to validate their authenticity.
-  # Write-Warning ">> Testing the catalog"
-  # $TestResult = Test-FileCatalog -CatalogFilePath $CatalogFilePath -Path $ModulePath
-  # Write-Warning ">> Test result is $TestResult"
-  # if ('Valid' -eq $TestResult) {
-  #   Write-Warning ">> Signing the module was successful."
-  #   return $true
-  # }
-  # else {
-  #   Write-Error ">> Signing the module was NOT successful."
-  # }
+  # Test-FileCatalog validates whether the hashes contained in a catalog file (.cat) matches
+  # the hashes of the actual files in order to validate their authenticity.
+  Write-Warning ">> Testing the catalog"
+  $TestResult = Test-FileCatalog -Path $ModuleBuildPath -CatalogFilePath $CatalogFilePath 
+  Write-Warning ">> Test result is $TestResult"
+  if ('Valid' -eq $TestResult) {
+    Write-Warning ">> Signing the module was successful."
+    return $true
+  }
+  else {
+    Write-Error ">> Signing the module was NOT successful."
+  }
   
   # if ($SuccessfullySigned) {
   #   Write-Output "> Successfully signed"
