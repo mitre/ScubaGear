@@ -136,16 +136,22 @@ function Publish-ScubaGearModule {
   ###################
   # Build-ScubaModule
   ###################
-  # $ModuleBuildPath = Build-ScubaModule -ModulePath $ModulePath -OverrideModuleVersion $OverrideModuleVersion -PrereleaseTag $PrereleaseTag
 
-  Write-Warning ">> Building ScubaGear module..."
+  Write-Output "Building ScubaGear module..."
+  
   $Leaf = Split-Path -Path $ModulePath -Leaf
   $ModuleBuildPath = Join-Path -Path $env:TEMP -ChildPath $Leaf
+
 
   if (Test-Path -Path $ModuleBuildPath -PathType Container) {
     Remove-Item -Recurse -Force $ModuleBuildPath
   }
 
+  Write-Output " The module path is $ModulePath"
+  Write-Output " The module build path is $ModuleBuildPath"
+  Write-Output " The temp destination is $env:TEMP"
+
+  Write-Output "Copying the module to the temp destination..."
   Copy-Item $ModulePath -Destination $env:TEMP -Recurse
 
   ##########################
@@ -336,7 +342,7 @@ function Publish-ScubaGearModule {
     $Parameters.Add('NuGetApiKey', $NuGetApiKey)
   }
 
-  # Write-Output "> The ScubaGear module will be published."
+  Write-Output "> The ScubaGear module will be published."
   # The -Force parameter is only required if the new version is less than or equal to
   # the current version, which is typically only true when testing.
   Publish-Module @Parameters -Force
