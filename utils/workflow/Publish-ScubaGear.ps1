@@ -133,9 +133,7 @@ function Publish-ScubaGearModule {
   # Copy the module to a temp location
   #####
 
-  Write-Warning "The module source path is of type"
-  Write-Warning $ModuleSourcePath.GetType()
-  $ModuleDestinationPath = Copy-ModuleToTempLocation($ModuleSourcePath, $env:TEMP)
+  $ModuleDestinationPath = Copy-ModuleToTempLocation -ModuleSourcePath $ModuleSourcePath, -ModuleTempPath $env:TEMP
 
   ##########################
   # ConfigureScubaGearModule
@@ -146,7 +144,6 @@ function Publish-ScubaGearModule {
   #   -PrereleaseTag $PrereleaseTag
 
   Write-Warning "Configuring ScubaGear module..."
-  
 
   $ManifestPath = Join-Path -Path $ModuleDestinationPath -ChildPath "ScubaGear.psd1"
 
@@ -340,7 +337,7 @@ function Copy-ModuleToTempLocation {
     [Parameter(Mandatory = $true)]
     [string]
     $ModuleTempPath
-  )
+ )
 
   Write-Warning "The module source path is of type"
   Write-Warning $ModuleSourcePath.GetType()
