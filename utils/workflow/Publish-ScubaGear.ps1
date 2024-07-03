@@ -133,7 +133,7 @@ function Publish-ScubaGearModule {
   # Copy the module to a temp location
   #####
 
-  $ModuleDestinationPath = Copy-ModuleToTempLocation -ModuleSourcePath $ModuleSourcePath, -ModuleTempPath $env:TEMP
+  $ModuleDestinationPath = Copy-ModuleToTempLocation -ModuleSourcePath $ModuleSourcePath -ModuleTempPath $env:TEMP
 
   ##########################
   # ConfigureScubaGearModule
