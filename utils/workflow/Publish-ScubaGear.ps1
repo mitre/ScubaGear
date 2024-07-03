@@ -130,10 +130,15 @@ function Publish-ScubaGearModule {
   Write-Output "Publishing ScubaGear module..."
 
   # Copy the module to a temp location
-  $ModuleDestinationPath = Copy-ModuleToTempLocation -ModuleSourcePath $ModuleSourcePath -ModuleTempPath $env:TEMP
+  $ModuleDestinationPath = Copy-ModuleToTempLocation `
+   -ModuleSourcePath $ModuleSourcePath `
+   -ModuleTempPath $env:TEMP
 
   # Edit the manifest file
-  Edit-TheManifestFile -ModuleDestinationPath $ModuleDestinationPath -OverrideModuleVersion $OverrideModuleVersion
+  Edit-TheManifestFile `
+   -ModuleDestinationPath $ModuleDestinationPath `
+   -OverrideModuleVersion $OverrideModuleVersion `
+   -PrereleaseTag $PrereleaseTag
 
   #####################
   # SignScubaGearModule
