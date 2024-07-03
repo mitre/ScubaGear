@@ -260,19 +260,28 @@ function Publish-ScubaGearModule {
     $FilePath = Get-ChildItem -Recurse -Path $ModuleBuildPath -Include $Extensions
     $ArrayOfFilePaths += $FilePath
   }
-  Write-Warning ">>> Verifying array of file paths..."
-  ForEach ($FilePath in $ArrayOfFilePaths) {
-      Write-Warning ">>> File path is $FilePath"
-  }
-  # return $ArrayOfFilePaths
+  # Write-Warning ">>> Verifying array of file paths..."
+  # ForEach ($FilePath in $ArrayOfFilePaths) {
+  #     Write-Warning ">>> File path is $FilePath"
+  # }
 
   # End CreateArrayOfFilePaths
 
   if ($ArrayOfFilePaths.Length -eq 0) {
     Write-Error "Failed to find any .ps1, .psm1, or .psd files."
   }
+  ################
+  # CreateFileList
+  ################
+
   # $FileList = CreateFileList $ArrayOfFilePaths # String
-  # Write-Warning ">> The file list is $FileList"
+  Write-Warning ">>> Creating file list..."
+  Write-Warning ">>> Found $($ArrayOfFilePaths.Count) files to sign"
+  $FileList = New-TemporaryFile
+  $ArrayOfFilePaths.FullName | Out-File -FilePath $($FileList.FullName) -Encoding utf8 -Force
+  $FileListFileName = $FileList.FullName
+
+  Write-Warning ">> The file list is $FileListFileName"
   # Write-Warning ">> Calling CallAzureSignTool function to sign scripts, manifest, and modules..."
   # CallAzureSignTool `
   #   -AzureKeyVaultUrl $AzureKeyVaultUrl `
@@ -591,21 +600,21 @@ function Publish-ScubaGearModule {
 #   return $ArrayOfFilePaths
 # }
 
-function CreateFileList {
-  <#
-        .NOTES
-            Creates a temp file with a list of filenames
-    #>
-  param([Parameter(Mandatory = $true)][array]$FileNames)
-  if ($FileNames -eq $null) {
-    Write-Error "FileNames is null"
-  }
-  Write-Warning ">>> Creating file list..."
-  Write-Warning ">>> Found $($FileNames.Count) files to sign"
-  $FileList = New-TemporaryFile
-  $FileNames.FullName | Out-File -FilePath $($FileList.FullName) -Encoding utf8 -Force
-  return $FileList.FullName
-}
+# function CreateFileList {
+#   <#
+#         .NOTES
+#             Creates a temp file with a list of filenames
+#     #>
+#   param([Parameter(Mandatory = $true)][array]$FileNames)
+#   if ($FileNames -eq $null) {
+#     Write-Error "FileNames is null"
+#   }
+#   Write-Warning ">>> Creating file list..."
+#   Write-Warning ">>> Found $($FileNames.Count) files to sign"
+#   $FileList = New-TemporaryFile
+#   $FileNames.FullName | Out-File -FilePath $($FileList.FullName) -Encoding utf8 -Force
+#   return $FileList.FullName
+# }
 
 function CallAzureSignTool {
   <#
